@@ -36,7 +36,7 @@ const isPdf = (mimetype = '', filename = '') => {
 
 // Type label → badge colour
 const TYPE_COLORS = {
-  CV:          'bg-purple-50 text-purple-700 border-purple-200',
+  CV:          'bg-cyan-50 text-cyan-700 border-purple-200',
   Achievement: 'bg-amber-50  text-amber-700  border-amber-200',
   Lab:         'bg-teal-50   text-teal-700   border-teal-200',
   Image:       'bg-sky-50    text-sky-700    border-sky-200',
@@ -132,10 +132,10 @@ const Documents = () => {
           disabled={uploading}
         />
 
-        <div className="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center mx-auto mb-4">
+        <div className="w-14 h-14 rounded-2xl bg-cyan-50 flex items-center justify-center mx-auto mb-4">
           {uploading
-            ? <Loader2 size={24} className="text-purple-500 animate-spin" />
-            : <Upload size={24} className="text-purple-500" />
+            ? <Loader2 size={24} className="text-cyan-500 animate-spin" />
+            : <Upload size={24} className="text-cyan-500" />
           }
         </div>
 
@@ -159,7 +159,7 @@ const Documents = () => {
               onClick={() => setFileType(t)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
                 fileType === t
-                  ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
+                  ? 'bg-cyan-600 text-white border-purple-600 shadow-sm'
                   : 'bg-white text-slate-500 border-slate-200 hover:border-purple-300'
               }`}
             >
@@ -199,7 +199,7 @@ const Documents = () => {
                 onClick={() => setFilter(t)}
                 className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all ${
                   filter === t
-                    ? 'bg-purple-600 text-white border-purple-600'
+                    ? 'bg-cyan-600 text-white border-purple-600'
                     : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300'
                 }`}
               >
@@ -279,7 +279,7 @@ const Documents = () => {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-xl bg-slate-50 text-slate-500 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+                    className="p-2 rounded-xl bg-slate-50 text-slate-500 hover:bg-cyan-50 hover:text-cyan-600 transition-colors"
                     title="View / Open"
                   >
                     <Eye size={15} />

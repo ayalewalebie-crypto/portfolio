@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SkillIcon — shows the correct technology icon for a skill name.
  *
  * Priority:
@@ -73,13 +73,13 @@ const SI_MAP = {
   'nuxt':                { siName: 'SiNuxt',         color: '#00dc82' },
   'angular':             { siName: 'SiAngular',      color: '#dd0031' },
   'svelte':              { siName: 'SiSvelte',       color: '#ff3e00' },
-  'express':             { siName: 'SiExpress',      color: 'var(--text-primary)' },
-  'express.js':          { siName: 'SiExpress',      color: 'var(--text-primary)' },
-  'expressjs':           { siName: 'SiExpress',      color: 'var(--text-primary)' },
+  'express':             { siName: 'SiExpress',      color: 'var(--c-text)' },
+  'express.js':          { siName: 'SiExpress',      color: 'var(--c-text)' },
+  'expressjs':           { siName: 'SiExpress',      color: 'var(--c-text)' },
   'nestjs':              { siName: 'SiNestjs',       color: '#e0234e' },
   'nest.js':             { siName: 'SiNestjs',       color: '#e0234e' },
   'django':              { siName: 'SiDjango',       color: '#44b78b' },
-  'flask':               { siName: 'SiFlask',        color: 'var(--text-primary)' },
+  'flask':               { siName: 'SiFlask',        color: 'var(--c-text)' },
   'fastapi':             { siName: 'SiFastapi',      color: '#009688' },
   'laravel':             { siName: 'SiLaravel',      color: '#ff2d20' },
   'postgresql':          { siName: 'SiPostgresql',   color: '#4169e1' },
@@ -94,7 +94,7 @@ const SI_MAP = {
   'nginx':               { siName: 'SiNginx',        color: '#009639' },
   'gitlab':              { siName: 'SiGitlab',       color: '#fc6d26' },
   'figma':               { siName: 'SiFigma',        color: '#f24e1e' },
-  'vercel':              { siName: 'SiVercel',       color: 'var(--text-primary)' },
+  'vercel':              { siName: 'SiVercel',       color: 'var(--c-text)' },
   'netlify':             { siName: 'SiNetlify',      color: '#00c7b7' },
   'google cloud':        { siName: 'SiGooglecloud',  color: '#4285f4' },
   'gcp':                 { siName: 'SiGooglecloud',  color: '#4285f4' },
@@ -108,7 +108,7 @@ const SI_MAP = {
   'rest apis':           { siName: 'SiOpenapiinitiative', color: '#6ba539' },
   'rest api':            { siName: 'SiOpenapiinitiative', color: '#6ba539' },
   'mongoose':            { siName: 'SiMongoose',     color: '#880000' },
-  'tailwindcss':         { siName: 'SiTailwindcss',  color: '#a855f7' },
+  'tailwindcss':         { siName: 'SiTailwindcss',  color: 'var(--c-accent)' },
 };
 
 // ── Lookup helpers ─────────────────────────────────────────────────────────────
@@ -166,7 +166,7 @@ const SkillIcon = ({ name, size = 20 }) => {
         width: Math.round(size * 0.55),
         height: Math.round(size * 0.55),
         borderRadius: '50%',
-        background: '#a855f7',
+        background: 'var(--c-accent)',
       }} />
     );
   }

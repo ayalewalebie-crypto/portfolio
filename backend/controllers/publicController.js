@@ -6,7 +6,6 @@ const Skill         = require('../models/Skill');
 const Experience    = require('../models/Experience');
 const Education     = require('../models/Education');
 const Certification = require('../models/Certification');
-const Achievement   = require('../models/Achievement');
 const NetworkingLab = require('../models/NetworkingLab');
 const Document      = require('../models/Document');
 const Message       = require('../models/Message');
@@ -26,8 +25,24 @@ exports.getPublicSkills         = async (req, res) => { try { ok(res, await Skil
 exports.getPublicExperience     = async (req, res) => { try { ok(res, await Experience.find({ isPublished: true }).sort('-startDate')); } catch(e){ err(res,e); } };
 exports.getPublicEducation      = async (req, res) => { try { ok(res, await Education.find({ isPublished: true }).sort('-startDate')); } catch(e){ err(res,e); } };
 exports.getPublicCertifications = async (req, res) => { try { ok(res, await Certification.find({ isPublished: true }).sort('order')); } catch(e){ err(res,e); } };
-exports.getPublicAchievements   = async (req, res) => { try { ok(res, await Achievement.find({ isPublished: true }).sort('order')); } catch(e){ err(res,e); } };
 exports.getPublicLabs           = async (req, res) => { try { ok(res, await NetworkingLab.find({ isPublished: true }).sort('order')); } catch(e){ err(res,e); } };
+
+exports.getPublicStats = async (req, res) => {
+  try {
+    const [projectsCount, skillsCount, certificationsCount, profile] = await Promise.all([
+      Project.countDocuments({ isPublished: true }),
+      Skill.countDocuments({ isPublished: true }),
+      Certification.countDocuments({ isPublished: true }),
+      Profile.findOne({ isPublished: true }).select('yearsExp'),
+    ]);
+    ok(res, {
+      yearsExp:         profile?.yearsExp || 0,
+      projectsCount,
+      skillsCount,
+      certificationsCount,
+    });
+  } catch(e){ err(res,e); }
+};
 
 exports.getPublicCV = async (req, res) => {
   try {

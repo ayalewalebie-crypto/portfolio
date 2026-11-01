@@ -43,15 +43,15 @@ const Contact = () => {
       {/* ── Hero label ──────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 lg:px-8 pt-20 pb-4 text-center">
         <p className="section-label justify-center">
-          <span style={{ width: 28, height: 1, background: '#a855f7', display: 'inline-block' }} />
+          <span style={{ width: 28, height: 1, background: 'var(--c-accent)', display: 'inline-block' }} />
           Get In Touch
-          <span style={{ width: 28, height: 1, background: '#a855f7', display: 'inline-block' }} />
+          <span style={{ width: 28, height: 1, background: 'var(--c-accent)', display: 'inline-block' }} />
         </p>
         <h1 className="font-extrabold mb-3"
-          style={{ fontSize: 'clamp(2rem,5vw,3rem)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
-          Contact <span style={{ color: 'var(--text-accent)' }}>Me</span>
+          style={{ fontSize: 'clamp(2rem,5vw,3rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
+          Contact <span style={{ color: 'var(--c-accent)' }}>Me</span>
         </h1>
-        <p style={{ color: 'var(--text-dimmest)', fontSize: '14px', maxWidth: 480, margin: '0 auto' }}>
+        <p style={{ color: 'var(--c-text-50)', fontSize: '14px', maxWidth: 480, margin: '0 auto' }}>
           Have a project idea, a question, or just want to connect? Send me a message and I'll get back to you.
         </p>
       </section>
@@ -63,7 +63,7 @@ const Contact = () => {
           {/* ── Left: contact info ──────────────────────────────────── */}
           <div>
             <h2 className="font-bold text-lg mb-6"
-              style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-sans)', letterSpacing: '-.01em' }}>
+              style={{ color: 'var(--c-text)', fontFamily: 'var(--font-sans)', letterSpacing: '-.01em' }}>
               Contact Information
             </h2>
 
@@ -81,7 +81,7 @@ const Contact = () => {
                 ['Email', 'Phone', 'Location'].map(label => (
                   <div key={label} className="flex items-baseline gap-3">
                     <span className="font-bold text-base"
-                      style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)', minWidth: '80px' }}>
+                      style={{ color: 'var(--c-text)', fontFamily: 'var(--font-mono)', minWidth: '80px' }}>
                       {label}:
                     </span>
                     <div className="h-5 w-44 rounded shimmer" />
@@ -91,7 +91,7 @@ const Contact = () => {
             </div>
 
             {/* Divider */}
-            <div className="my-8" style={{ height: 1, background: 'var(--bg-accent-medium)' }} />
+            <div className="my-8" style={{ height: 1, background: 'var(--c-accent-bg-sm)' }} />
 
             {/* Social connect */}
             <SocialConnect compact />
@@ -100,9 +100,9 @@ const Contact = () => {
           {/* ── Right: contact form ─────────────────────────────────── */}
           <div className="rounded-3xl p-7 sm:p-8"
             style={{
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-accent)',
-              boxShadow: 'none',
+              background: 'var(--c-surface)',
+              border: '1px solid var(--c-border)',
+              boxShadow: '0 8px 40px rgba(0,0,0,.35)',
             }}>
 
             {/* Success state */}
@@ -112,17 +112,17 @@ const Contact = () => {
                   style={{ background: 'rgba(16,185,129,.15)', border: '1px solid rgba(16,185,129,.3)' }}>
                   <CheckCircle2 size={30} style={{ color: '#10b981' }} />
                 </div>
-                <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+                <h3 className="font-bold text-lg" style={{ color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
                   Message Sent!
                 </h3>
-                <p style={{ color: 'var(--text-dimmest)', fontSize: '14px', maxWidth: 280 }}>
+                <p style={{ color: 'var(--c-text-50)', fontSize: '14px', maxWidth: 280 }}>
                   Thank you for reaching out. I'll get back to you as soon as possible.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="space-y-4">
                 <h2 className="font-bold text-base mb-5"
-                  style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+                  style={{ color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
                   Send a Message
                 </h2>
 
@@ -143,8 +143,8 @@ const Contact = () => {
                 {/* Message textarea */}
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-widest mb-1.5"
-                    style={{ color: 'var(--text-dimmest)' }}>
-                    Message <span style={{ color: 'var(--text-accent)' }}>*</span>
+                    style={{ color: 'var(--c-text-50)' }}>
+                    Message <span style={{ color: 'var(--c-accent)' }}>*</span>
                   </label>
                   <textarea
                     name="message"
@@ -156,18 +156,18 @@ const Contact = () => {
                     style={{
                       width: '100%',
                       padding: '12px 14px',
-                      background: 'var(--bg-input)',
-                      border: '1px solid var(--border-accent4)',
+                      background: 'var(--c-input)',
+                      border: '1px solid var(--c-accent-bg-md)',
                       borderRadius: '14px',
-                      color: 'var(--text-primary)',
+                      color: 'var(--c-text)',
                       fontSize: '14px',
                       fontFamily: 'var(--font-mono)',
                       outline: 'none',
                       resize: 'vertical',
                       transition: 'border-color .2s',
                     }}
-                    onFocus={e  => (e.target.style.borderColor = 'var(--border-input-focus)')}
-                    onBlur={e   => (e.target.style.borderColor = 'var(--border-input)')}
+                    onFocus={e  => (e.target.style.borderColor = 'var(--c-border-focus)')}
+                    onBlur={e   => (e.target.style.borderColor = 'var(--c-accent-bg-md)')}
                   />
                 </div>
 
@@ -193,8 +193,8 @@ const Contact = () => {
                     padding: '13px 24px',
                     borderRadius: '14px',
                     background: status === 'sending'
-                      ? 'rgba(168,85,247,.3)'
-                      : 'linear-gradient(135deg,#7c3aed,#a855f7)',
+                      ? 'var(--c-accent-bg-lg)'
+                      : 'linear-gradient(135deg,#0891b2,var(--c-accent))',
                     color: '#fff',
                     fontWeight: 700,
                     fontSize: '14px',
@@ -203,7 +203,7 @@ const Contact = () => {
                     cursor: status === 'sending' ? 'not-allowed' : 'pointer',
                     opacity: (!form.name.trim() || !form.email.trim() || !form.message.trim()) ? .5 : 1,
                     transition: 'all .25s ease',
-                    boxShadow: '0 6px 24px rgba(168,85,247,.25)',
+                    boxShadow: '0 6px 24px var(--c-accent-bg-lg)',
                   }}
                   onMouseEnter={e => { if (status !== 'sending') e.currentTarget.style.transform = 'translateY(-2px)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
@@ -228,17 +228,17 @@ const Contact = () => {
 const InfoRow = ({ label, href, value }) => (
   <div className="flex items-baseline gap-3">
     <span className="font-bold text-base flex-shrink-0"
-      style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)', minWidth: '80px' }}>
+      style={{ color: 'var(--c-text)', fontFamily: 'var(--font-mono)', minWidth: '80px' }}>
       {label}:
     </span>
     {href ? (
-      <a href={href} style={{ color: 'var(--text-accent)', fontFamily: 'var(--font-mono)', fontSize: '14px', wordBreak: 'break-all' }}
-        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-primary)')}
-        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-accent)')}>
+      <a href={href} style={{ color: 'var(--c-accent)', fontFamily: 'var(--font-mono)', fontSize: '14px', wordBreak: 'break-all' }}
+        onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-text)')}
+        onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-accent)')}>
         {value}
       </a>
     ) : (
-      <span style={{ color: 'var(--text-accent)', fontFamily: 'var(--font-mono)', fontSize: '14px' }}>{value}</span>
+      <span style={{ color: 'var(--c-accent)', fontFamily: 'var(--font-mono)', fontSize: '14px' }}>{value}</span>
     )}
   </div>
 );
@@ -246,8 +246,8 @@ const InfoRow = ({ label, href, value }) => (
 const FormInput = ({ name, label, type = 'text', placeholder, value, onChange, required }) => (
   <div>
     <label className="block text-[11px] font-bold uppercase tracking-widest mb-1.5"
-      style={{ color: 'var(--text-dimmest)' }}>
-      {label} {required && <span style={{ color: 'var(--text-accent)' }}>*</span>}
+      style={{ color: 'var(--c-text-50)' }}>
+      {label} {required && <span style={{ color: 'var(--c-accent)' }}>*</span>}
     </label>
     <input
       type={type}
@@ -259,17 +259,17 @@ const FormInput = ({ name, label, type = 'text', placeholder, value, onChange, r
       style={{
         width: '100%',
         padding: '11px 14px',
-        background: 'var(--bg-input)',
-        border: '1px solid var(--border-accent4)',
+        background: 'var(--c-input)',
+        border: '1px solid var(--c-accent-bg-md)',
         borderRadius: '12px',
-        color: 'var(--text-primary)',
+        color: 'var(--c-text)',
         fontSize: '14px',
         fontFamily: 'var(--font-mono)',
         outline: 'none',
         transition: 'border-color .2s',
       }}
-      onFocus={e  => (e.target.style.borderColor = 'var(--border-input-focus)')}
-      onBlur={e   => (e.target.style.borderColor = 'var(--border-input)')}
+      onFocus={e  => (e.target.style.borderColor = 'var(--c-border-focus)')}
+      onBlur={e   => (e.target.style.borderColor = 'var(--c-accent-bg-md)')}
     />
   </div>
 );

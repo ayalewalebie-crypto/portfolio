@@ -29,6 +29,7 @@ export const pub = {
   getLabs:           () => publicApi.get('/labs'),
   getCV:             () => publicApi.get('/cv'),
   downloadCVUrl:     `${BASE}/public/cv/download`,
+  getStats:          () => publicApi.get('/stats'),
   contact:           (data) => publicApi.post('/contact', data),
   aiChat:            (msg)  => publicApi.post('/ai-chat', { message: msg }),
 };

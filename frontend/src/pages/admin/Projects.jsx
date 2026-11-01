@@ -110,7 +110,7 @@ const ScreenshotEditor = ({ screenshots, onChange }) => {
               </div>
               {/* "Card preview" badge on first */}
               {i === 0 && (
-                <span className="absolute top-1.5 left-1.5 text-[10px] font-bold px-1.5 py-0.5 bg-purple-600 text-white rounded-md">
+                <span className="absolute top-1.5 left-1.5 text-[10px] font-bold px-1.5 py-0.5 bg-cyan-600 text-white rounded-md">
                   Cover
                 </span>
               )}
@@ -137,13 +137,13 @@ const ScreenshotEditor = ({ screenshots, onChange }) => {
         <div className="flex flex-col items-center justify-center gap-2 py-6 px-4 text-center">
           {uploading ? (
             <>
-              <Loader2 size={24} className="text-purple-500 animate-spin" />
+              <Loader2 size={24} className="text-cyan-500 animate-spin" />
               <p className="text-sm font-medium text-slate-600">Uploading…</p>
             </>
           ) : (
             <>
-              <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
-                <Upload size={18} className="text-purple-500" />
+              <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center">
+                <Upload size={18} className="text-cyan-500" />
               </div>
               <p className="text-sm font-semibold text-slate-700">
                 Click to upload <span className="text-slate-400 font-normal">or drag & drop</span>
@@ -303,13 +303,13 @@ const Projects = () => {
                 {item.demoLink && (
                   <a href={safeUrl(item.demoLink)} target="_blank" rel="noopener noreferrer"
                     onClick={e => e.stopPropagation()}
-                    className="p-1.5 text-slate-400 hover:text-purple-600 rounded-lg hover:bg-purple-50"
+                    className="p-1.5 text-slate-400 hover:text-cyan-600 rounded-lg hover:bg-cyan-50"
                     title="Open live demo">
                     <Globe size={15} />
                   </a>
                 )}
                 <button onClick={() => openEdit(item)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition-colors">
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-600 hover:bg-cyan-50 transition-colors">
                   <Pencil size={15} />
                 </button>
                 <button onClick={() => handleDelete(item._id)}
@@ -405,7 +405,7 @@ const Projects = () => {
               Cancel
             </button>
             <button type="submit" disabled={saving}
-              className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold disabled:opacity-60 transition-colors">
+              className="px-5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold disabled:opacity-60 transition-colors">
               {saving ? 'Saving…' : editing ? 'Save Changes' : 'Create Project'}
             </button>
           </div>

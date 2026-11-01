@@ -50,15 +50,15 @@ const ProjectModal = ({ project, onClose }) => {
     /* Backdrop */
     <div
       className="fixed inset-0 z-[70] flex items-center justify-center p-4"
-      style={{ background: 'var(--bg-backdrop)', backdropFilter: 'blur(8px)' }}
+      style={{ background: 'var(--c-overlay)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}
     >
       {/* Panel */}
       <div
         className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl flex flex-col"
         style={{
-          background: 'var(--bg-modal)',
-          border: '1px solid var(--border-accent2)',
+          background: 'var(--c-modal)',
+          border: '1px solid var(--c-accent-bg-lg)',
           boxShadow: '0 24px 80px rgba(0,0,0,.7)',
         }}
         onClick={e => e.stopPropagation()}
@@ -66,7 +66,7 @@ const ProjectModal = ({ project, onClose }) => {
         {/* Close */}
         <button onClick={onClose}
           className="absolute top-4 right-4 z-10 w-8 h-8 rounded-xl flex items-center justify-center transition-colors"
-          style={{ background: 'var(--bg-surface-strong)', color: 'var(--text-accent)' }}
+          style={{ background: 'var(--c-surface-md)', color: 'var(--c-accent)' }}
           aria-label="Close">
           <X size={16} />
         </button>
@@ -100,7 +100,7 @@ const ProjectModal = ({ project, onClose }) => {
                   {shots.map((_, i) => (
                     <button key={i} onClick={() => setImgIdx(i)}
                       className="w-1.5 h-1.5 rounded-full transition-all"
-                      style={{ background: i === imgIdx ? '#a855f7' : 'rgba(255,255,255,.4)' }} />
+                      style={{ background: i === imgIdx ? 'var(--c-accent)' : 'rgba(255,255,255,.4)' }} />
                   ))}
                 </div>
               </>
@@ -110,7 +110,7 @@ const ProjectModal = ({ project, onClose }) => {
             <div className="absolute bottom-4 left-5 flex items-center gap-2">
               {project.category && (
                 <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg"
-                  style={{ background: 'var(--bg-accent-strong)', color: '#e9d5ff', border: '1px solid rgba(168,85,247,.4)' }}>
+                  style={{ background: 'var(--c-accent-bg-md)', color: '#e9d5ff', border: '1px solid var(--c-accent-40)' }}>
                   {project.category}
                 </span>
               )}
@@ -125,8 +125,8 @@ const ProjectModal = ({ project, onClose }) => {
         ) : (
           /* No screenshot — show gradient header */
           <div className="rounded-t-3xl flex items-center justify-center flex-shrink-0"
-            style={{ height: '120px', background: 'linear-gradient(135deg,rgba(124,58,237,.4),rgba(168,85,247,.2))' }}>
-            <FolderKanban size={40} style={{ color: 'var(--text-accent-ghost)' }} />
+            style={{ height: '120px', background: 'linear-gradient(135deg,rgba(8,145,178,.4),var(--c-accent-bg-md))' }}>
+            <FolderKanban size={40} style={{ color: 'var(--c-accent-40)' }} />
           </div>
         )}
 
@@ -135,12 +135,12 @@ const ProjectModal = ({ project, onClose }) => {
           {/* Title + year */}
           <div className="flex items-start justify-between gap-3">
             <h2 className="font-extrabold text-xl leading-snug"
-              style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+              style={{ color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
               {project.title}
             </h2>
             {project.createdAt && (
               <span className="text-xs font-mono flex-shrink-0 mt-1"
-                style={{ color: 'var(--text-accent-faint)' }}>
+                style={{ color: 'var(--c-accent-50)' }}>
                 {fmtYear(project.createdAt)}
               </span>
             )}
@@ -148,7 +148,7 @@ const ProjectModal = ({ project, onClose }) => {
 
           {/* Description */}
           {project.solution && (
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--c-text-85)' }}>
               {project.solution}
             </p>
           )}
@@ -156,10 +156,10 @@ const ProjectModal = ({ project, onClose }) => {
           {/* Problem + Objectives */}
           {project.problemBackground && (
             <div className="rounded-xl p-4"
-              style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-accent3)' }}>
+              style={{ background: 'var(--c-surface)', border: '1px solid var(--c-accent-bg-md)' }}>
               <p className="text-[11px] font-bold uppercase tracking-widest mb-1.5"
-                style={{ color: 'var(--text-accent-dim)' }}>Problem</p>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                style={{ color: 'var(--c-accent-60)' }}>Problem</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--c-text-70)' }}>
                 {project.problemBackground}
               </p>
             </div>
@@ -169,13 +169,13 @@ const ProjectModal = ({ project, onClose }) => {
           {project.features?.length > 0 && (
             <div>
               <p className="text-[11px] font-bold uppercase tracking-widest mb-3"
-                style={{ color: 'var(--text-accent-dim)' }}>Key Features</p>
+                style={{ color: 'var(--c-accent-60)' }}>Key Features</p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {project.features.map(f => (
                   <li key={f} className="flex items-start gap-2 text-sm"
-                    style={{ color: 'var(--text-muted)' }}>
+                    style={{ color: 'var(--c-text-70)' }}>
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5"
-                      style={{ background: '#a855f7' }} />
+                      style={{ background: 'var(--c-accent)' }} />
                     {f}
                   </li>
                 ))}
@@ -187,11 +187,11 @@ const ProjectModal = ({ project, onClose }) => {
           {project.technologies?.length > 0 && (
             <div>
               <p className="text-[11px] font-bold uppercase tracking-widest mb-2.5"
-                style={{ color: 'var(--text-accent-dim)' }}>Tech Stack</p>
+                style={{ color: 'var(--c-accent-60)' }}>Tech Stack</p>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map(t => (
                   <span key={t} className="text-xs px-2.5 py-1 rounded-lg font-mono"
-                    style={{ background: 'var(--bg-surface-strong)', color: 'rgba(168,85,247,.85)', border: '1px solid var(--border-accent4)' }}>
+                    style={{ background: 'var(--c-surface-md)', color: 'var(--c-accent)', border: '1px solid var(--c-accent-bg-md)' }}>
                     {t}
                   </span>
                 ))}
@@ -200,7 +200,7 @@ const ProjectModal = ({ project, onClose }) => {
           )}
 
           {/* ── CTA buttons ── */}
-          <div className="flex flex-wrap gap-3 pt-2 border-t" style={{ borderColor: 'var(--border-accent3)' }}>
+          <div className="flex flex-wrap gap-3 pt-2 border-t" style={{ borderColor: 'var(--c-accent-bg-md)' }}>
             {/* DEMO — primary big button */}
             {project.demoLink && (
               <a
@@ -209,8 +209,8 @@ const ProjectModal = ({ project, onClose }) => {
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-2xl font-bold text-sm text-white transition-all hover:-translate-y-0.5"
                 style={{
-                  background: 'linear-gradient(135deg,#7c3aed,#a855f7)',
-                  boxShadow: '0 6px 20px rgba(168,85,247,.45)',
+                  background: 'linear-gradient(135deg,#0891b2,var(--c-accent))',
+                  boxShadow: '0 6px 20px var(--c-accent-45)',
                   minWidth: '140px',
                 }}
               >
@@ -226,9 +226,9 @@ const ProjectModal = ({ project, onClose }) => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 py-3 px-5 rounded-2xl font-semibold text-sm transition-all hover:-translate-y-0.5"
                 style={{
-                  background: 'var(--bg-surface-strong)',
-                  border: '1px solid var(--border-surface2)',
-                  color: 'var(--text-secondary)',
+                  background: 'var(--c-surface-md)',
+                  border: '1px solid var(--c-border-surf)',
+                  color: 'var(--c-text-85)',
                 }}
               >
                 <GithubIcon size={15} /> Source Code
@@ -243,9 +243,9 @@ const ProjectModal = ({ project, onClose }) => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 py-3 px-5 rounded-2xl font-semibold text-sm transition-all hover:-translate-y-0.5"
                 style={{
-                  background: 'var(--bg-teal-medium)',
-                  border: '1px solid rgba(45,212,191,.25)',
-                  color: '#2dd4bf',
+                  background: 'var(--c-teal-bg)',
+                  border: '1px solid var(--c-teal-border)',
+                  color: 'var(--c-teal)',
                 }}
               >
                 <ExternalLink size={14} /> Docs
@@ -276,21 +276,21 @@ const Projects = () => {
     <div style={{ minHeight: '100vh' }}>
 
       {/* Banner */}
-      <div className="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--bg-section)' }}>
+      <div className="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--c-section)' }}>
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-20"
-            style={{ background: 'radial-gradient(circle,rgba(168,85,247,.25) 0%,transparent 70%)', filter: 'blur(40px)' }} />
+            style={{ background: 'radial-gradient(circle,var(--c-accent-bg-lg) 0%,transparent 70%)', filter: 'blur(40px)' }} />
         </div>
         <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center gap-2 mb-3"
-            style={{ color: 'var(--text-accent-muted)', fontSize: '12px', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase' }}>
+            style={{ color: 'var(--c-accent-70)', fontSize: '12px', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase' }}>
             <FolderKanban size={13} /> Projects
           </div>
           <h1 className="font-extrabold tracking-tight mb-2"
-            style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
-            My Recent <strong style={{ color: 'var(--text-accent)' }}>Works</strong>
+            style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
+            My Recent <strong style={{ color: 'var(--c-accent)' }}>Works</strong>
           </h1>
-          <p style={{ color: 'var(--text-dimmer)', fontSize: '14px' }}>
+          <p style={{ color: 'var(--c-text-60)', fontSize: '14px' }}>
             Click any project to see details, screenshots and the live demo.
           </p>
         </div>
@@ -305,8 +305,8 @@ const Projects = () => {
               <button key={cat} onClick={() => setFilter(cat)}
                 className="px-4 py-2 rounded-xl text-xs font-bold transition-all"
                 style={filter === cat
-                  ? { background: 'linear-gradient(135deg,#7c3aed,#a855f7)', color: '#fff', boxShadow: '0 4px 14px rgba(168,85,247,.4)' }
-                  : { background: 'var(--bg-surface-hover)', color: 'var(--text-accent)', border: '1px solid var(--border-accent2)' }}>
+                  ? { background: 'linear-gradient(135deg,#0891b2,var(--c-accent))', color: '#fff', boxShadow: '0 4px 14px var(--c-accent-40)' }
+                  : { background: 'var(--c-surface)', color: 'var(--c-accent)', border: '1px solid var(--c-accent-bg-lg)' }}>
                 {cat}
               </button>
             ))}
@@ -319,8 +319,8 @@ const Projects = () => {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
-            <FolderKanban size={48} style={{ color: 'var(--text-accent-ghost)', margin: '0 auto 12px' }} />
-            <p style={{ color: 'var(--text-dimmest)' }}>No projects yet — check back soon!</p>
+            <FolderKanban size={48} style={{ color: 'var(--c-accent-40)', margin: '0 auto 12px' }} />
+            <p style={{ color: 'var(--c-text-50)' }}>No projects yet — check back soon!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -332,7 +332,7 @@ const Projects = () => {
                   key={proj._id}
                   onClick={() => setSelected(proj)}
                   className="card-glow rounded-2xl overflow-hidden flex flex-col text-left transition-all hover:-translate-y-1 cursor-pointer w-full"
-                  style={{ background: 'var(--bg-surface)' }}
+                  style={{ background: 'var(--c-surface)' }}
                 >
                   {/* Screenshot or placeholder */}
                   {proj.screenshots?.length > 0 ? (
@@ -341,26 +341,26 @@ const Projects = () => {
                         className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
                       {/* "Click to view" hint */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
-                        style={{ background: 'rgba(124,58,237,.5)' }}>
+                        style={{ background: 'rgba(8,145,178,.5)' }}>
                         <span className="flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold text-sm"
-                          style={{ background: 'rgba(168,85,247,.8)' }}>
+                          style={{ background: 'var(--c-accent)' }}>
                           <Play size={14} fill="white" /> View Details
                         </span>
                       </div>
                     </div>
                   ) : (
                     <div className="h-28 flex items-center justify-center relative"
-                      style={{ background: 'linear-gradient(135deg,rgba(124,58,237,.3),rgba(168,85,247,.15))' }}>
-                      <FolderKanban size={36} style={{ color: 'var(--text-accent-ghost)' }} />
+                      style={{ background: 'linear-gradient(135deg,rgba(8,145,178,.3),var(--c-accent-bg-md))' }}>
+                      <FolderKanban size={36} style={{ color: 'var(--c-accent-40)' }} />
                       <span className="absolute bottom-2 right-3 text-[10px] font-semibold"
-                        style={{ color: 'var(--text-accent-faint)' }}>Click to view →</span>
+                        style={{ color: 'var(--c-accent-50)' }}>Click to view →</span>
                     </div>
                   )}
 
                   <div className="p-5 flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg"
-                        style={{ background: 'var(--bg-surface-strong)', color: 'var(--text-accent)', border: '1px solid var(--border-accent2)' }}>
+                        style={{ background: 'var(--c-surface-md)', color: 'var(--c-accent)', border: '1px solid var(--c-accent-bg-lg)' }}>
                         {cat}
                       </span>
                       <div className="flex items-center gap-2">
@@ -371,33 +371,33 @@ const Projects = () => {
                           </span>
                         )}
                         {proj.createdAt && (
-                          <span className="text-xs font-mono" style={{ color: 'var(--text-accent-ghost)' }}>
+                          <span className="text-xs font-mono" style={{ color: 'var(--c-accent-40)' }}>
                             {fmtYear(proj.createdAt)}
                           </span>
                         )}
                       </div>
                     </div>
 
-                    <h2 className="font-bold text-base mb-2" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+                    <h2 className="font-bold text-base mb-2" style={{ color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
                       {proj.title}
                     </h2>
 
                     <p className="text-sm leading-relaxed flex-1 line-clamp-2"
-                      style={{ color: 'var(--text-dimmer)' }}>
+                      style={{ color: 'var(--c-text-60)' }}>
                       {proj.solution || proj.problemBackground || proj.objectives || 'Click to see full details.'}
                     </p>
 
                     {/* Tech pills */}
                     {proj.technologies?.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-4 pt-4" style={{ borderTop: '1px solid var(--border-accent3)' }}>
+                      <div className="flex flex-wrap gap-1.5 mt-4 pt-4" style={{ borderTop: '1px solid var(--c-accent-bg-md)' }}>
                         {proj.technologies.slice(0, 4).map(t => (
                           <span key={t} className="text-[11px] px-2 py-0.5 rounded font-mono"
-                            style={{ background: 'var(--bg-surface-strong)', color: 'rgba(168,85,247,.8)', border: '1px solid var(--border-accent4)' }}>
+                            style={{ background: 'var(--c-surface-md)', color: 'var(--c-accent)', border: '1px solid var(--c-accent-bg-md)' }}>
                             {t}
                           </span>
                         ))}
                         {proj.technologies.length > 4 && (
-                          <span className="text-[11px] px-2 py-0.5 rounded font-mono" style={{ color: 'var(--text-accent-faint)' }}>
+                          <span className="text-[11px] px-2 py-0.5 rounded font-mono" style={{ color: 'var(--c-accent-50)' }}>
                             +{proj.technologies.length - 4}
                           </span>
                         )}
@@ -406,7 +406,7 @@ const Projects = () => {
 
                     {/* Bottom hint */}
                     <div className="flex items-center gap-3 mt-3 pt-3"
-                      style={{ borderTop: '1px solid rgba(168,85,247,.08)' }}>
+                      style={{ borderTop: '1px solid var(--c-border-xs)' }}>
                       {proj.demoLink && (
                         <a
                           href={safeUrl(proj.demoLink)}
@@ -415,9 +415,9 @@ const Projects = () => {
                           onClick={e => e.stopPropagation()}
                           className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg transition-all hover:-translate-y-0.5"
                           style={{
-                            background: 'linear-gradient(135deg,#7c3aed,#a855f7)',
+                            background: 'linear-gradient(135deg,#0891b2,var(--c-accent))',
                             color: '#fff',
-                            boxShadow: '0 3px 10px rgba(168,85,247,.35)',
+                            boxShadow: '0 3px 10px var(--c-accent-40)',
                           }}
                         >
                           <Play size={11} fill="white" /> Play Demo
@@ -430,7 +430,7 @@ const Projects = () => {
                           rel="noopener noreferrer"
                           onClick={e => e.stopPropagation()}
                           className="flex items-center gap-1 text-xs font-semibold hover:opacity-80 transition-opacity"
-                          style={{ color: 'var(--text-dimmest)' }}
+                          style={{ color: 'var(--c-text-50)' }}
                         >
                           <GithubIcon size={11} /> Source code
                         </a>

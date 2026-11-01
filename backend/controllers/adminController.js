@@ -30,7 +30,7 @@ const createTransport = () => {
 exports.getDashboardStats = async (req, res) => {
   try {
     const [projectsCount, educationCount, certificationsCount, messagesCount,
-           skillsCount, experienceCount, achievementsCount, labsCount, unreadCount] =
+           skillsCount, experienceCount, labsCount, unreadCount] =
       await Promise.all([
         Project.countDocuments(),
         Education.countDocuments(),
@@ -38,14 +38,13 @@ exports.getDashboardStats = async (req, res) => {
         Message.countDocuments(),
         Skill.countDocuments(),
         Experience.countDocuments(),
-        Achievement.countDocuments(),
         NetworkingLab.countDocuments(),
         Message.countDocuments({ isRead: false }),
       ]);
     const recentMessages = await Message.find().sort('-createdAt').limit(5);
     res.json({
       projectsCount, educationCount, certificationsCount, messagesCount,
-      skillsCount, experienceCount, achievementsCount, labsCount, unreadCount,
+      skillsCount, experienceCount, labsCount, unreadCount,
       recentMessages,
     });
   } catch (err) { res.status(500).json({ message: err.message }); }
@@ -83,7 +82,7 @@ exports.updateProfile = async (req, res) => {
       'name','title','introduction','about',
       'email','phone','location',
       'github','linkedin','twitter','telegram','instagram','facebook',
-      'profilePhoto',
+      'profilePhoto','yearsExp',
     ];
     const update = {};
     allowed.forEach(k => {

@@ -13,7 +13,6 @@ const PublicContact     = lazy(() => import('./pages/public/Contact'));
 const PublicProjects    = lazy(() => import('./pages/public/Projects'));
 const PublicCV          = lazy(() => import('./pages/public/CVViewer'));
 const PublicNetworking  = lazy(() => import('./pages/public/NetworkingLabs'));
-const PublicAchievements= lazy(() => import('./pages/public/Achievements'));
 
 // ── Admin pages ───────────────────────────────────────────────────────────────
 import Login from './pages/admin/Login';
@@ -23,7 +22,6 @@ const AdminSkills    = lazy(() => import('./pages/admin/Skills'));
 const AdminEducation = lazy(() => import('./pages/admin/Education'));
 const AdminExperience= lazy(() => import('./pages/admin/Experience'));
 const AdminCerts     = lazy(() => import('./pages/admin/Certifications'));
-const AdminAchieve   = lazy(() => import('./pages/admin/Achievements'));
 const AdminLabs      = lazy(() => import('./pages/admin/NetworkingLabs'));
 const AdminDocuments = lazy(() => import('./pages/admin/Documents'));
 const AdminMessages  = lazy(() => import('./pages/admin/Messages'));
@@ -49,7 +47,6 @@ const App = () => (
             <Route path="projects"    element={<PublicProjects />} />
             <Route path="cv"          element={<PublicCV />} />
             <Route path="networking-labs" element={<PublicNetworking />} />
-            <Route path="achievements"    element={<PublicAchievements />} />
           </Route>
 
           {/* ── Admin login ── */}
@@ -63,7 +60,6 @@ const App = () => (
             <Route path="education"        element={<AdminEducation />} />
             <Route path="experience"       element={<AdminExperience />} />
             <Route path="certifications"   element={<AdminCerts />} />
-            <Route path="achievements"     element={<AdminAchieve />} />
             <Route path="networking-labs"  element={<AdminLabs />} />
             <Route path="documents"        element={<AdminDocuments />} />
             <Route path="messages"         element={<AdminMessages />} />

@@ -45,7 +45,7 @@ const CVViewer = () => {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ background: '#0c0a1e' }}
+      style={{ background: 'var(--c-bg-cv, var(--c-section))' }}
     >
       {/* ── Starry header ─────────────────────────────────────────────── */}
       <section
@@ -88,7 +88,7 @@ const CVViewer = () => {
               height: '160px',
               borderRadius: '9999px',
               opacity: 0.25,
-              background: 'radial-gradient(ellipse at center, rgba(147,51,234,.4) 0%, transparent 70%)',
+              background: 'radial-gradient(ellipse at center, rgba(6,182,212,.4) 0%, transparent 70%)',
               filter: 'blur(45px)',
             }}
           />
@@ -104,7 +104,7 @@ const CVViewer = () => {
             className="inline-flex items-center justify-center gap-2.5 px-8 py-3 rounded-xl text-white font-medium text-sm sm:text-base transition-all duration-300 hover:-translate-y-0.5 active:scale-95 group"
             style={{
               background: 'linear-gradient(135deg,#532577 0%,#69349c 100%)',
-              boxShadow: '0 4px 20px rgba(105,52,156,.45), 0 0 0 1px rgba(168,85,247,.35)',
+              boxShadow: '0 4px 20px rgba(105,52,156,.45), 0 0 0 1px var(--c-accent-40)',
               textDecoration: 'none',
             }}
             title="Download CV to your device"
@@ -131,9 +131,9 @@ const CVViewer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:bg-white/10"
                 style={{
-                  color: 'rgba(255,255,255,.8)',
-                  background: 'rgba(255,255,255,.05)',
-                  border: '1px solid rgba(255,255,255,.12)',
+                  color: 'var(--c-text-85)',
+                  background: 'var(--c-input)',
+                  border: '1px solid var(--c-border-surf)',
                   textDecoration: 'none',
                 }}
                 title="Open in new window"
@@ -147,9 +147,9 @@ const CVViewer = () => {
                 onClick={handlePrint}
                 className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:bg-white/10 cursor-pointer"
                 style={{
-                  color: 'rgba(255,255,255,.8)',
-                  background: 'rgba(255,255,255,.05)',
-                  border: '1px solid rgba(255,255,255,.12)',
+                  color: 'var(--c-text-85)',
+                  background: 'var(--c-input)',
+                  border: '1px solid var(--c-border-surf)',
                 }}
                 title="Print CV"
               >
@@ -182,7 +182,7 @@ const CVViewer = () => {
           <div className="flex flex-col items-center justify-center py-28 gap-4">
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg"
-              style={{ background: 'linear-gradient(135deg,#532577,#7c3aed)' }}
+              style={{ background: 'linear-gradient(135deg,#532577,#0891b2)' }}
             >
               <Loader2 size={30} className="text-white animate-spin" />
             </div>
@@ -219,7 +219,7 @@ const CVViewer = () => {
             className="w-full bg-white overflow-hidden"
             style={{
               borderRadius: '12px 12px 0 0',
-              boxShadow: '0 25px 60px -10px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.08)',
+              boxShadow: '0 25px 60px -10px rgba(0,0,0,.65), 0 0 0 1px var(--c-surface-md)',
             }}
           >
             {isPdf ? (
@@ -248,7 +248,7 @@ const CVViewer = () => {
                     href={fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-700 underline"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-700 underline"
                   >
                     <ExternalLink size={12} /> Open in PDF Reader
                   </a>
@@ -257,7 +257,7 @@ const CVViewer = () => {
             ) : (
               /* Non-PDF fallback */
               <div className="flex flex-col items-center justify-center p-16 text-center text-slate-700">
-                <FileText size={48} className="text-purple-600 mb-4" />
+                <FileText size={48} className="text-cyan-600 mb-4" />
                 <h4 className="text-lg font-bold mb-1">{cv.name}</h4>
                 <p className="text-xs text-slate-500 mb-6">
                   {fmtSize(cv.size)} · Click below to view or download.
@@ -267,14 +267,14 @@ const CVViewer = () => {
                     href={fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-purple-700 hover:bg-purple-800 transition-colors"
+                    className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-cyan-700 hover:bg-cyan-800 transition-colors"
                   >
                     View Document
                   </a>
                   <a
                     href={CV_DOWNLOAD_PROXY}
                     download={cv.name}
-                    className="px-5 py-2.5 rounded-lg text-sm font-semibold text-purple-700 border border-purple-300 hover:bg-purple-50 transition-colors"
+                    className="px-5 py-2.5 rounded-lg text-sm font-semibold text-cyan-700 border border-cyan-300 hover:bg-cyan-50 transition-colors"
                   >
                     Download
                   </a>

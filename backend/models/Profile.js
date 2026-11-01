@@ -16,6 +16,7 @@ const profileSchema = new mongoose.Schema({
   facebook:  { type: String },
   profilePhoto: { type: String },
   cvDocument: { type: mongoose.Schema.Types.ObjectId, ref: 'Document' },
+  yearsExp: { type: Number, default: 0 },
   isPublished: { type: Boolean, default: true }
 }, { timestamps: true });
 

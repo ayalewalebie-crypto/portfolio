@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { adm } from '../../services/api';
 import {
-  FolderKanban, Code2, Award, Trophy, Network,
+  FolderKanban, Code2, Award, Network,
   GraduationCap, Briefcase, ExternalLink,
   Sparkles, ArrowRight, TrendingUp, Mail,
 } from 'lucide-react';
@@ -13,7 +13,6 @@ const STAT_CARDS = [
   { key: 'educationCount',      label: 'Education',        icon: GraduationCap, link: '/admin/education',       from: 'from-emerald-500',to: 'to-teal-600'    },
   { key: 'experienceCount',     label: 'Experience',       icon: Briefcase,     link: '/admin/experience',      from: 'from-sky-500',    to: 'to-blue-600'    },
   { key: 'certificationsCount', label: 'Certifications',   icon: Award,         link: '/admin/certifications',  from: 'from-amber-500',  to: 'to-orange-500'  },
-  { key: 'achievementsCount',   label: 'Achievements',     icon: Trophy,        link: '/admin/achievements',    from: 'from-orange-500', to: 'to-rose-500'    },
   { key: 'labsCount',           label: 'Networking Labs',  icon: Network,       link: '/admin/networking-labs', from: 'from-teal-500',   to: 'to-emerald-600' },
   { key: 'messagesCount',       label: 'Messages',         icon: Mail,          link: '/admin/messages',        from: 'from-cyan-400',   to: 'to-sky-500',  unreadKey: 'unreadCount' },
 ];

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { pub } from '../../services/api';
 import { ArrowRight, Mail } from 'lucide-react';
@@ -44,6 +44,23 @@ const useTypewriter = (strings, speed = 80, pause = 1800) => {
 
 const CURRENT_YEAR = new Date().getFullYear();
 
+// ── Count-up animation hook ───────────────────────────────────────────────────
+const useCountUp = (target, duration = 1200) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!target) return;
+    let start = 0;
+    const step = Math.ceil(target / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { setCount(target); clearInterval(timer); }
+      else setCount(start);
+    }, 16);
+    return () => clearInterval(timer);
+  }, [target, duration]);
+  return count;
+};
+
 const TYPEWRITER_STRINGS = [
   'Information Systems Student',
   'Full-Stack Developer',
@@ -52,12 +69,94 @@ const TYPEWRITER_STRINGS = [
 ];
 
 
+// ── Stats strip ───────────────────────────────────────────────────────────────
+const StatCard = ({ value, label, suffix = '+' }) => {
+  const count = useCountUp(value, 1000);
+  return (
+    <div className="flex flex-col items-center gap-2 fade-up">
+      {/* Number box */}
+      <div
+        style={{
+          background: 'var(--c-accent)',
+          color: '#fff',
+          fontFamily: 'var(--font-sans)',
+          fontWeight: 900,
+          fontSize: 'clamp(1.6rem,3.5vw,2.4rem)',
+          lineHeight: 1,
+          padding: '14px 28px',
+          borderRadius: '12px',
+          minWidth: '90px',
+          textAlign: 'center',
+          boxShadow: '0 6px 24px var(--cyan-glow)',
+          letterSpacing: '-0.02em',
+        }}
+      >
+        {count}{suffix}
+      </div>
+      {/* Label */}
+      <span
+        style={{
+          color: 'var(--c-text-70)',
+          fontSize: '11px',
+          fontWeight: 700,
+          letterSpacing: '.12em',
+          textTransform: 'uppercase',
+          fontFamily: 'var(--font-sans)',
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+};
+
+const StatsStrip = ({ stats }) => {
+  if (!stats) return null;
+
+  const items = [
+    { value: stats.yearsExp,         suffix: '+', label: 'Year Exp.' },
+    { value: stats.projectsCount,    suffix: '+', label: 'Projects'  },
+    { value: stats.skillsCount,      suffix: '+', label: 'Skills'    },
+    { value: stats.certificationsCount, suffix: '+', label: 'Certificates' },
+  ].filter(i => i.value > 0);
+
+  if (!items.length) return null;
+
+  return (
+    <div
+      style={{
+        background: 'var(--c-surface)',
+        borderTop:    '1px solid var(--c-border-xs)',
+        borderBottom: '1px solid var(--c-border-xs)',
+        padding: '40px 16px',
+      }}
+    >
+      <div
+        className="max-w-4xl mx-auto"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          flexWrap: 'wrap',
+          gap: 'clamp(28px,6vw,72px)',
+        }}
+      >
+        {items.map((item, i) => (
+          <StatCard key={i} {...item} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Home = () => {
   const [profile, setProfile] = useState(null);
+  const [stats,   setStats]   = useState(null);
   const { display, phase } = useTypewriter(TYPEWRITER_STRINGS);
 
   useEffect(() => {
     pub.getProfile().then(({ data }) => setProfile(data)).catch(() => {});
+    pub.getStats().then(({ data }) => setStats(data)).catch(() => {});
   }, []);
 
   const photoSrc = profile?.profilePhoto
@@ -70,36 +169,36 @@ const Home = () => {
       {/* ══════════════════════════════════════════════════════════════
           HERO SECTION
       ══════════════════════════════════════════════════════════════ */}
-      <section className="hero-section-bg relative min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
+      <section className="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
         style={{ paddingTop: '80px', paddingBottom: '60px',
-          background: 'var(--bg-section)' }}>
+          background: 'var(--c-section)' }}>
 
         {/* Purple orbs + dot grid */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           {/* Top-right orb */}
           <div className="absolute -top-32 -right-32 w-[550px] h-[550px] rounded-full"
-            style={{ background: 'radial-gradient(circle,rgba(168,85,247,.18) 0%,transparent 65%)', filter: 'blur(48px)' }} />
+            style={{ background: 'radial-gradient(circle,var(--c-border) 0%,transparent 65%)', filter: 'blur(48px)' }} />
           {/* Mid-left orb */}
           <div className="absolute top-1/3 -left-20 w-80 h-80 rounded-full"
-            style={{ background: 'radial-gradient(circle,rgba(147,51,234,.12) 0%,transparent 65%)', filter: 'blur(36px)' }} />
+            style={{ background: 'radial-gradient(circle,rgba(6,182,212,.12) 0%,transparent 65%)', filter: 'blur(36px)' }} />
           {/* Bottom-left orb */}
           <div className="absolute bottom-10 -left-32 w-96 h-96 rounded-full"
-            style={{ background: 'radial-gradient(circle,rgba(124,58,237,.2) 0%,transparent 70%)', filter: 'blur(32px)' }} />
+            style={{ background: 'radial-gradient(circle,rgba(8,145,178,.2) 0%,transparent 70%)', filter: 'blur(32px)' }} />
           {/* Bottom-right glow */}
           <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full"
-            style={{ background: 'radial-gradient(circle,rgba(168,85,247,.1) 0%,transparent 70%)', filter: 'blur(28px)' }} />
+            style={{ background: 'radial-gradient(circle,var(--c-accent-bg-sm) 0%,transparent 70%)', filter: 'blur(28px)' }} />
           {/* Purple dot grid */}
           <svg className="absolute inset-0 w-full h-full" style={{ opacity: .06 }} xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-                <circle cx="1.5" cy="1.5" r="1.5" fill="#a855f7" />
+                <circle cx="1.5" cy="1.5" r="1.5" fill="var(--c-accent)" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#dots)" />
           </svg>
           {/* Horizontal purple line accent */}
           <div className="absolute top-1/2 left-0 right-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(168,85,247,.08), transparent)' }} />
+            style={{ background: 'linear-gradient(90deg, transparent, var(--c-border-xs), transparent)' }} />
         </div>
 
         <div className="relative max-w-6xl mx-auto w-full">
@@ -108,22 +207,22 @@ const Home = () => {
             {/* Text */}
             <div className="flex-1 min-w-0">
               <h1 className="fade-up font-extrabold tracking-tight leading-tight mb-4"
-                style={{ fontSize: 'clamp(2.4rem,6vw,4.5rem)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+                style={{ fontSize: 'clamp(2.4rem,6vw,4.5rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
                 Hi There!{' '}
                 <span className="wave" role="img" aria-label="wave">👋🏻</span>
               </h1>
 
               <h2 className="fade-up fade-up-delay-1 font-extrabold tracking-tight mb-6"
-                style={{ fontSize: 'clamp(1.8rem,5vw,3.5rem)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+                style={{ fontSize: 'clamp(1.8rem,5vw,3.5rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
                 I'M{' '}
-                <strong style={{ color: 'var(--text-accent)' }}>
+                <strong style={{ color: 'var(--c-accent)' }}>
                   {profile?.name?.toUpperCase() || 'ALEBIE AYALEW'}
                 </strong>
               </h2>
 
               {/* Typewriter */}
               <div className="fade-up fade-up-delay-2 mb-8 h-12 flex items-center">
-                <span style={{ fontSize: 'clamp(1.1rem,2.5vw,1.6rem)', color: 'var(--text-accent)', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
+                <span style={{ fontSize: 'clamp(1.1rem,2.5vw,1.6rem)', color: 'var(--c-accent)', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
                   {display}
                   <span style={{
                     color: '#b562d6',
@@ -158,7 +257,7 @@ const Home = () => {
                 </Link>
                 <Link to="/contact"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm transition-all hover:-translate-y-0.5"
-                  style={{ background: 'transparent', border: '2px solid rgba(168,85,247,.5)', color: 'var(--text-accent)', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: 'transparent', border: '2px solid var(--c-accent-50)', color: 'var(--c-accent)', fontFamily: 'var(--font-sans)' }}>
                   <Mail size={15} /> Contact Me
                 </Link>
               </div>
@@ -169,26 +268,26 @@ const Home = () => {
               {photoSrc ? (
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full blur-2xl opacity-50"
-                    style={{ background: 'linear-gradient(135deg,#a855f7,#7c3aed)', transform: 'scale(1.1)' }} />
+                    style={{ background: 'linear-gradient(135deg,var(--c-accent),#0891b2)', transform: 'scale(1.1)' }} />
                   <img src={photoSrc} alt={profile?.name || 'Profile'}
                     className="relative w-64 h-64 xl:w-72 xl:h-72 object-cover avatar-glow" />
                 </div>
               ) : (
                 <div className="w-64 xl:w-72 rounded-2xl p-6 card-glow font-mono text-xs leading-6"
-                  style={{ background: 'var(--bg-code)' }}>
+                  style={{ background: 'var(--c-code)' }}>
                   <div className="flex gap-1.5 mb-4">
                     <span className="w-3 h-3 rounded-full bg-rose-500" />
                     <span className="w-3 h-3 rounded-full bg-amber-400" />
                     <span className="w-3 h-3 rounded-full bg-emerald-500" />
                   </div>
-                  <div style={{ color: 'var(--text-dimmest)' }}>
-                    <span style={{ color: 'var(--text-accent)' }}>const</span>{' '}
-                    <span style={{ color: 'var(--text-accent)' }}>developer</span> = {'{'}<br />
-                    &nbsp;&nbsp;<span style={{ color: '#2dd4bf' }}>name</span>:{' '}
+                  <div style={{ color: 'var(--c-text-50)' }}>
+                    <span style={{ color: 'var(--c-accent)' }}>const</span>{' '}
+                    <span style={{ color: 'var(--c-accent)' }}>developer</span> = {'{'}<br />
+                    &nbsp;&nbsp;<span style={{ color: 'var(--c-teal)' }}>name</span>:{' '}
                     <span style={{ color: '#86efac' }}>"{profile?.name || 'Alebie'}"</span>,<br />
-                    &nbsp;&nbsp;<span style={{ color: '#2dd4bf' }}>stack</span>:{' '}
+                    &nbsp;&nbsp;<span style={{ color: 'var(--c-teal)' }}>stack</span>:{' '}
                     [<span style={{ color: '#86efac' }}>"React"</span>, <span style={{ color: '#86efac' }}>"Node"</span>],<br />
-                    &nbsp;&nbsp;<span style={{ color: '#2dd4bf' }}>available</span>:{' '}
+                    &nbsp;&nbsp;<span style={{ color: 'var(--c-teal)' }}>available</span>:{' '}
                     <span style={{ color: '#f472b6' }}>true</span><br />
                     {'}'};
                   </div>
@@ -200,28 +299,33 @@ const Home = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
+          STATS STRIP
+      ══════════════════════════════════════════════════════════════ */}
+      <StatsStrip stats={stats} />
+
+      {/* ══════════════════════════════════════════════════════════════
           ABOUT ME PREVIEW (short)
       ══════════════════════════════════════════════════════════════ */}
-      <section style={{ background: 'var(--bg-section)', padding: '70px 16px' }}>
+      <section style={{ background: 'var(--c-section)', padding: '70px 16px' }}>
         <div className="max-w-6xl mx-auto">
           <h2 className="font-extrabold mb-8 text-center"
-            style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
-            LET ME <span style={{ color: 'var(--text-accent)' }}>INTRODUCE</span> MYSELF
+            style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
+            LET ME <span style={{ color: 'var(--c-accent)' }}>INTRODUCE</span> MYSELF
           </h2>
           <div className="flex flex-col lg:flex-row gap-10 items-center">
             <div className="flex-1">
-              <p className="leading-loose text-base mb-4" style={{ color: 'var(--text-secondary)' }}>
+              <p className="leading-loose text-base mb-4" style={{ color: 'var(--c-text-85)' }}>
                 {profile?.introduction ||
                   "I'm a passionate Full Stack Developer focused on building modern, scalable, and user-friendly web and mobile applications — transforming ideas into real digital products."}
               </p>
-              <p className="leading-loose" style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+              <p className="leading-loose" style={{ color: 'var(--c-text-70)', fontSize: '0.95rem' }}>
                 My core stack includes{' '}
-                <strong style={{ color: 'var(--text-accent)' }}>React, Node.js, MongoDB</strong> and{' '}
-                <strong style={{ color: 'var(--text-accent)' }}>Cisco Networking</strong>.
+                <strong style={{ color: 'var(--c-accent)' }}>React, Node.js, MongoDB</strong> and{' '}
+                <strong style={{ color: 'var(--c-accent)' }}>Cisco Networking</strong>.
               </p>
               <Link to="/about"
                 className="inline-flex items-center gap-2 mt-6 text-sm font-bold transition-all hover:-translate-y-0.5"
-                style={{ color: 'var(--text-accent)', fontFamily: 'var(--font-sans)' }}>
+                style={{ color: 'var(--c-accent)', fontFamily: 'var(--font-sans)' }}>
                 Read more about me <ArrowRight size={14} />
               </Link>
             </div>

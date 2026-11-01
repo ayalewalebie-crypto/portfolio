@@ -12,8 +12,6 @@ const {
   getExperience, createExperience, updateExperience, deleteExperience,
   getEducation, createEducation, updateEducation, deleteEducation,
   getCertifications, createCertification, updateCertification, deleteCertification,
-  getAchievements, createAchievement, updateAchievement, deleteAchievement,
-  uploadAchievementImage,
   getLabs, createLab, updateLab, deleteLab,
   getDocuments, uploadDocument, deleteDocument,
   getMessages, markMessageRead, deleteMessage, replyMessage,
@@ -82,13 +80,6 @@ router.get   ('/certifications',     getCertifications);
 router.post  ('/certifications',     createCertification);
 router.put   ('/certifications/:id', updateCertification);
 router.delete('/certifications/:id', deleteCertification);
-
-// Achievements
-router.post  ('/achievements/upload-image',  upload.single('image'), uploadAchievementImage);
-router.get   ('/achievements',     getAchievements);
-router.post  ('/achievements',     createAchievement);
-router.put   ('/achievements/:id', updateAchievement);
-router.delete('/achievements/:id', deleteAchievement);
 
 // Networking Labs
 router.get   ('/labs',     getLabs);

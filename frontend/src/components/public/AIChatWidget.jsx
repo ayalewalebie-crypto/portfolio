@@ -15,7 +15,7 @@ const TypingDots = () => (
     {[0, 1, 2].map((i) => (
       <span
         key={i}
-        className="w-2 h-2 rounded-full bg-purple-400 animate-bounce"
+        className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce"
         style={{ animationDelay: `${i * 0.15}s`, animationDuration: '0.8s' }}
       />
     ))}
@@ -34,7 +34,7 @@ const renderMarkdown = (text) => {
     if (isBullet) {
       return (
         <div key={i} className="flex gap-1.5 mt-1">
-          <span className="mt-1 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
+          <span className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
           <span>{rendered}</span>
         </div>
       );
@@ -123,7 +123,7 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
         className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
           open
             ? 'bg-slate-800 text-white pr-3.5'
-            : 'bg-gradient-to-br from-purple-700 to-purple-600 text-white hover:from-purple-600 hover:to-purple-500 hover:scale-105 active:scale-100'
+            : 'bg-gradient-to-br from-cyan-700 to-cyan-600 text-white hover:from-cyan-600 hover:to-cyan-500 hover:scale-105 active:scale-100'
         }`}
       >
         {open ? (
@@ -152,14 +152,14 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
         aria-label="AI Chat Assistant"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-purple-700 to-purple-600 text-white flex-shrink-0">
+        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-cyan-700 to-cyan-600 text-white flex-shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
               <Bot size={18} />
             </div>
             <div>
               <p className="text-sm font-bold leading-none">Portfolio AI</p>
-              <p className="text-[11px] text-purple-200 mt-0.5 leading-none">Ask me anything</p>
+              <p className="text-[11px] text-cyan-200 mt-0.5 leading-none">Ask me anything</p>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
@@ -188,8 +188,8 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
               <div
                 className={`w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold mt-0.5 ${
                   msg.role === 'user'
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-gradient-to-br from-purple-600 to-purple-500 text-white'
+                    ? 'bg-cyan-600 text-white'
+                    : 'bg-gradient-to-br from-cyan-600 to-cyan-500 text-white'
                 }`}
               >
                 {msg.role === 'user' ? <User size={13} /> : <Bot size={13} />}
@@ -199,7 +199,7 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
               <div
                 className={`max-w-[82%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   msg.role === 'user'
-                    ? 'bg-purple-600 text-white rounded-tr-sm'
+                    ? 'bg-cyan-600 text-white rounded-tr-sm'
                     : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm shadow-xs'
                 }`}
               >
@@ -211,7 +211,7 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
           {/* Typing indicator */}
           {loading && (
             <div className="flex gap-2">
-              <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-purple-600 to-purple-500 text-white mt-0.5">
+              <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-cyan-600 to-cyan-500 text-white mt-0.5">
                 <Bot size={13} />
               </div>
               <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-3.5 py-2.5 shadow-xs">
@@ -231,7 +231,7 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
                   <button
                     key={s}
                     onClick={() => sendMessage(s)}
-                    className="text-left text-xs px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-purple-300 hover:bg-purple-50 hover:text-purple-700 transition-all"
+                    className="text-left text-xs px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700 transition-all"
                   >
                     {s}
                   </button>
@@ -245,7 +245,7 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
 
         {/* Input */}
         <div className="flex-shrink-0 border-t border-slate-200 bg-white px-3 py-3">
-          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus-within:border-purple-400 focus-within:ring-2 focus-within:ring-purple-100 transition-all">
+          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus-within:border-cyan-400 focus-within:ring-2 focus-within:ring-purple-100 transition-all">
             <input
               ref={inputRef}
               type="text"
@@ -260,7 +260,7 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
             <button
               onClick={() => sendMessage()}
               disabled={!input.trim() || loading}
-              className="w-7 h-7 rounded-lg flex items-center justify-center bg-purple-600 text-white disabled:opacity-40 hover:bg-purple-700 transition-colors flex-shrink-0"
+              className="w-7 h-7 rounded-lg flex items-center justify-center bg-cyan-600 text-white disabled:opacity-40 hover:bg-cyan-700 transition-colors flex-shrink-0"
               aria-label="Send message"
             >
               {loading ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}

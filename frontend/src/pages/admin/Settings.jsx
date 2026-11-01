@@ -37,7 +37,7 @@ const Settings = () => {
     name:'', title:'', introduction:'', about:'',
     email:'', phone:'', location:'',
     github:'', linkedin:'', twitter:'', telegram:'', instagram:'', facebook:'',
-    profilePhoto:'',
+    profilePhoto:'', yearsExp: 0,
   });
 
   const [pwForm, setPwForm] = useState({
@@ -200,6 +200,9 @@ const Settings = () => {
             </Field>
             <Field label="Location">
               <Input name="location" value={profile.location} onChange={handleProfile} placeholder="Bahir Dar, Ethiopia"/>
+            </Field>
+            <Field label="Years of Experience">
+              <Input name="yearsExp" type="number" min="0" max="50" value={profile.yearsExp} onChange={handleProfile} placeholder="e.g. 2"/>
             </Field>
           </div>
         </Section>

@@ -21,29 +21,29 @@ const SkillModal = ({ skill, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4"
-      style={{ background: 'var(--bg-backdrop)', backdropFilter: 'blur(8px)' }}
+      style={{ background: 'var(--c-overlay)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}>
       <div className="relative w-full max-w-md rounded-3xl overflow-hidden"
-        style={{ background: 'var(--bg-modal)', border: '1px solid var(--border-accent2)', boxShadow: '0 24px 80px rgba(0,0,0,.7)' }}
+        style={{ background: 'var(--c-modal)', border: '1px solid var(--c-accent-bg-lg)', boxShadow: '0 24px 80px rgba(0,0,0,.7)' }}
         onClick={e => e.stopPropagation()}>
-        <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg,#7c3aed,#a855f7)' }} />
+        <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg,#0891b2,var(--c-accent))' }} />
         <button onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 rounded-xl flex items-center justify-center z-10"
-          style={{ background: 'var(--bg-surface-strong)', color: 'var(--text-accent)' }}>
+          style={{ background: 'var(--c-surface-md)', color: 'var(--c-accent)' }}>
           <X size={16} />
         </button>
         <div className="p-7 space-y-5">
           {/* Header */}
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: 'var(--bg-surface-strong)', border: '1px solid var(--border-accent2)' }}>
+              style={{ background: 'var(--c-surface-md)', border: '1px solid var(--c-accent-bg-lg)' }}>
               <SkillIcon name={skill.name} size={30} />
             </div>
             <div>
-              <h2 className="font-extrabold text-xl" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+              <h2 className="font-extrabold text-xl" style={{ color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
                 {skill.name}
               </h2>
-              <span className="text-xs" style={{ color: 'var(--text-accent-faint)' }}>
+              <span className="text-xs" style={{ color: 'var(--c-accent-50)' }}>
                 {CAT_ICON[skill.category] || '📦'} {skill.category}
               </span>
             </div>
@@ -52,17 +52,17 @@ const SkillModal = ({ skill, onClose }) => {
           {/* Description */}
           {skill.description ? (
             <div className="rounded-2xl p-5"
-              style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-accent3)' }}>
+              style={{ background: 'var(--c-surface)', border: '1px solid var(--c-accent-bg-md)' }}>
               <p className="text-[11px] font-bold uppercase tracking-widest mb-2.5"
-                style={{ color: 'var(--text-accent-dim)' }}>About this skill</p>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                style={{ color: 'var(--c-accent-60)' }}>About this skill</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--c-text-85)' }}>
                 {skill.description}
               </p>
             </div>
           ) : (
             <div className="rounded-2xl p-4 text-center"
-              style={{ background: 'var(--bg-surface)', border: '1px dashed var(--border-accent4)' }}>
-              <p className="text-xs italic" style={{ color: 'var(--text-accent-ghost)' }}>No description added yet.</p>
+              style={{ background: 'var(--c-surface)', border: '1px dashed var(--c-accent-bg-md)' }}>
+              <p className="text-xs italic" style={{ color: 'var(--c-accent-40)' }}>No description added yet.</p>
             </div>
           )}
         </div>
@@ -83,18 +83,18 @@ const SkillPill = ({ skill, onClick }) => {
       style={{
         padding: '10px 20px',
         borderRadius: '999px',
-        background: 'var(--bg-surface-hover)',
-        border: '1.5px solid rgba(168,85,247,.35)',
-        color: 'var(--text-primary)',
+        background: 'var(--c-surface)',
+        border: '1.5px solid var(--c-accent-40)',
+        color: 'var(--c-text)',
         fontFamily: 'var(--font-sans)',
         fontWeight: 600,
         fontSize: '14px',
         cursor: 'pointer',
-        boxShadow: '4px 5px 4px 3px rgba(147,51,234,.12)',
+        boxShadow: '4px 5px 4px 3px rgba(6,182,212,.12)',
         whiteSpace: 'nowrap',
       }}
-      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(168,85,247,.8)'; }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(168,85,247,.35)'; }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--c-accent)'; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--c-border-sm)'; }}
     >
       {/* Icon — safe rendering for both svg and si types */}
       {match ? (
@@ -106,7 +106,7 @@ const SkillPill = ({ skill, onClick }) => {
           <match.Icon size={18} style={{ color: match.color, flexShrink: 0 }} />
         )
       ) : (
-        <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#a855f7', flexShrink: 0, display: 'inline-block' }} />
+        <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--c-accent)', flexShrink: 0, display: 'inline-block' }} />
       )}
       {name}
     </button>
@@ -150,20 +150,20 @@ const Skills = () => {
     <div style={{ minHeight: '100vh' }}>
       {/* Banner */}
       <div className="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'var(--bg-section)' }}>
+        style={{ background: 'var(--c-section)' }}>
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full"
-            style={{ background: 'radial-gradient(circle,rgba(168,85,247,.22) 0%,transparent 70%)', filter: 'blur(40px)', opacity: .3 }} />
+            style={{ background: 'radial-gradient(circle,var(--c-accent-bg-md) 0%,transparent 70%)', filter: 'blur(40px)', opacity: .3 }} />
         </div>
         <div className="relative max-w-6xl mx-auto text-center">
           <h1 className="font-extrabold tracking-tight mb-2"
-            style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
-            Professional <strong style={{ color: 'var(--text-accent)' }}>Skillset</strong>
+            style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
+            Professional <strong style={{ color: 'var(--c-accent)' }}>Skillset</strong>
           </h1>
-          <p style={{ color: 'var(--text-dimmer)', fontSize: '14px' }}>
+          <p style={{ color: 'var(--c-text-60)', fontSize: '14px' }}>
             Technologies and tools I work with every day.
             {!isFallback && (
-              <span style={{ color: 'var(--text-accent-faint)' }}> Click any skill to see details.</span>
+              <span style={{ color: 'var(--c-accent-50)' }}> Click any skill to see details.</span>
             )}
           </p>
         </div>
@@ -186,11 +186,11 @@ const Skills = () => {
             {Object.entries(display).map(([cat, catSkills]) => (
               <div key={cat} className="text-center">
                 <h3 className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest mb-7"
-                  style={{ color: 'var(--text-accent-muted)' }}>
-                  <span className="h-px w-8 hidden sm:block" style={{ background: 'var(--bg-accent-strong)' }} />
+                  style={{ color: 'var(--c-accent-70)' }}>
+                  <span className="h-px w-8 hidden sm:block" style={{ background: 'var(--c-accent-bg-md)' }} />
                   <span>{CAT_ICON[cat] || '📦'}</span>
                   {cat}
-                  <span className="h-px w-8 hidden sm:block" style={{ background: 'var(--bg-accent-strong)' }} />
+                  <span className="h-px w-8 hidden sm:block" style={{ background: 'var(--c-accent-bg-md)' }} />
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
                   {catSkills.map(sk => (

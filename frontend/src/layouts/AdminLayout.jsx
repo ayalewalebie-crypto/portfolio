@@ -4,21 +4,20 @@ import { useAuth } from '../context/AuthContext';
 import { adm } from '../services/api';
 import {
   LayoutDashboard, FolderKanban, Code2, GraduationCap, Briefcase,
-  Award, Trophy, Network, FileText, Mail, Settings,
+  Award, Network, FileText, Mail, Settings,
   LogOut, ExternalLink, Menu, X, Loader2, ChevronRight,
 } from 'lucide-react';
 
 const NAV = [
-  { label: 'Overview',        path: '/admin',                icon: LayoutDashboard, color: 'text-purple-400' },
-  { label: 'Projects',        path: '/admin/projects',       icon: FolderKanban,    color: 'text-purple-400' },
+  { label: 'Overview',        path: '/admin',                icon: LayoutDashboard, color: 'text-cyan-400' },
+  { label: 'Projects',        path: '/admin/projects',       icon: FolderKanban,    color: 'text-cyan-400' },
   { label: 'Skills',          path: '/admin/skills',         icon: Code2,           color: 'text-blue-400'   },
   { label: 'Education',       path: '/admin/education',      icon: GraduationCap,   color: 'text-emerald-400'},
   { label: 'Experience',      path: '/admin/experience',     icon: Briefcase,       color: 'text-sky-400'    },
   { label: 'Certifications',  path: '/admin/certifications', icon: Award,           color: 'text-amber-400'  },
-  { label: 'Achievements',    path: '/admin/achievements',   icon: Trophy,          color: 'text-orange-400' },
   { label: 'Networking Labs', path: '/admin/networking-labs',icon: Network,         color: 'text-teal-400'   },
   { label: 'CV / Documents',  path: '/admin/documents',      icon: FileText,        color: 'text-pink-400'   },
-  { label: 'Messages',        path: '/admin/messages',       icon: Mail,            color: 'text-purple-400' },
+  { label: 'Messages',        path: '/admin/messages',       icon: Mail,            color: 'text-cyan-400' },
   { label: 'Settings',        path: '/admin/settings',       icon: Settings,        color: 'text-slate-400'  },
 ];
 
@@ -44,7 +43,7 @@ const AdminLayout = () => {
     <div className="min-h-screen flex items-center justify-center" style={{ background: '#060d28' }}>
       <div className="flex flex-col items-center gap-4">
         <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-          style={{ background: 'linear-gradient(135deg,#7c3aed,#9333ea)' }}>
+          style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
           <Loader2 size={26} className="text-white animate-spin" />
         </div>
         <p className="text-slate-400 text-sm font-medium">Verifying session…</p>
@@ -79,7 +78,7 @@ const AdminLayout = () => {
         `}
         style={{
           background: 'linear-gradient(180deg,#060d28 0%,#071430 60%,#060d28 100%)',
-          borderRight: '1px solid rgba(168,85,247,.15)',
+          borderRight: '1px solid rgba(34,211,238,.15)',
         }}
       >
         {/* Brand */}
@@ -100,7 +99,7 @@ const AdminLayout = () => {
               ) : (
                 <div
                   className="w-full h-full flex items-center justify-center font-extrabold text-white text-sm"
-                  style={{ background: 'linear-gradient(135deg,#7c3aed,#9333ea)' }}
+                  style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}
                 >
                   {(profile?.name || admin?.name || 'A')[0].toUpperCase()}
                 </div>
@@ -136,27 +135,27 @@ const AdminLayout = () => {
                     : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
                 style={active ? {
-                  background: 'linear-gradient(135deg,rgba(124,58,237,.35),rgba(168,85,247,.2))',
-                  boxShadow:  '0 0 0 1px rgba(124,58,237,.3)',
+                  background: 'linear-gradient(135deg,rgba(8,145,178,.35),rgba(34,211,238,.2))',
+                  boxShadow:  '0 0 0 1px rgba(8,145,178,.3)',
                 } : {}}
               >
                 <Icon
                   size={16}
-                  className={`flex-shrink-0 transition-colors ${active ? 'text-purple-300' : color + ' group-hover:text-white'}`}
+                  className={`flex-shrink-0 transition-colors ${active ? 'text-cyan-300' : color + ' group-hover:text-white'}`}
                 />
                 <span className="flex-1 text-[13px]">{label}</span>
                 {label === 'Messages' && unread > 0 && (
                   <span style={{
                     fontSize: '10px', fontWeight: 800, lineHeight: 1,
                     padding: '2px 6px', borderRadius: '999px',
-                    background: active ? 'rgba(168,85,247,.3)' : '#a855f7',
-                    color: active ? '#a855f7' : '#fff',
+                    background: active ? 'rgba(34,211,238,.3)' : '#22d3ee',
+                    color: active ? '#22d3ee' : '#fff',
                     flexShrink: 0,
                   }}>
                     {unread}
                   </span>
                 )}
-                {active && <ChevronRight size={13} className="text-purple-400 flex-shrink-0" />}
+                {active && <ChevronRight size={13} className="text-cyan-400 flex-shrink-0" />}
               </Link>
             );
           })}
@@ -202,7 +201,7 @@ const AdminLayout = () => {
             backdropFilter: 'blur(12px)',
             WebkitBackdropFilter: 'blur(12px)',
             borderBottom: '1px solid rgba(226,232,240,.8)',
-            boxShadow: '0 2px 16px rgba(124,58,237,.05)',
+            boxShadow: '0 2px 16px rgba(8,145,178,.05)',
           }}
         >
           <div className="flex items-center gap-3">
@@ -233,7 +232,7 @@ const AdminLayout = () => {
               to="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-purple-600 hover:border-purple-200 text-xs font-semibold transition-all shadow-xs"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-cyan-600 hover:border-purple-200 text-xs font-semibold transition-all shadow-xs"
             >
               <ExternalLink size={13} /> Preview
             </Link>

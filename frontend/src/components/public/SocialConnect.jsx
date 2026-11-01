@@ -67,8 +67,8 @@ const SocialConnect = ({ title = 'Find Me On', compact = false }) => {
       name: 'Email',
       icon: <FaEnvelope />,
       url:  `mailto:${profile.email}`,
-      bg:   '#a855f7',
-      glow: 'rgba(168,85,247,.6)',
+      bg:   'var(--c-accent)',
+      glow: 'var(--c-accent-60)',
     },
     has(profile.phone) && {
       name: 'Phone',
@@ -116,7 +116,7 @@ const SocialConnect = ({ title = 'Find Me On', compact = false }) => {
     return (
       <div>
         <p className="text-[11px] font-bold uppercase tracking-widest mb-4"
-          style={{ color: 'var(--text-accent-dim)' }}>
+          style={{ color: 'var(--c-accent-60)' }}>
           Find Me On
         </p>
         <div className="flex flex-wrap gap-3">
@@ -131,13 +131,13 @@ const SocialConnect = ({ title = 'Find Me On', compact = false }) => {
   /* ── Full mode: heading + description + large icons ──────────────────── */
   return (
     <div className="py-14 px-4 sm:px-6 lg:px-8 text-center"
-      style={{ borderTop: '1px solid var(--border-accent3)' }}>
+      style={{ borderTop: '1px solid var(--c-accent-bg-md)' }}>
       <h2 className="font-extrabold mb-2"
-        style={{ fontSize: 'clamp(1.4rem,3vw,1.8rem)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
+        style={{ fontSize: 'clamp(1.4rem,3vw,1.8rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
         {title}
       </h2>
-      <p className="text-sm mb-10" style={{ color: 'var(--text-dimmest)' }}>
-        Feel free to <span style={{ color: 'var(--text-accent)' }}>connect</span> with me
+      <p className="text-sm mb-10" style={{ color: 'var(--c-text-50)' }}>
+        Feel free to <span style={{ color: 'var(--c-accent)' }}>connect</span> with me
       </p>
       <div className="flex items-center justify-center flex-wrap gap-5">
         {links.map(({ name, icon, url, bg, glow }) => (
