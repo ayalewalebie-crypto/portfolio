@@ -7,14 +7,17 @@ backend/node_modules/
 frontend/dist/
 frontend/dist-ssr/
 
-# Environment variables & secrets
+# Environment variables & secrets — never commit real .env files
 .env
-.env.*
+.env.local
+.env.development
+.env.production
 backend/.env
-backend/.env.*
+backend/.env.local
 frontend/.env
 frontend/.env.local
 frontend/.env.*.local
+# .env.example IS safe to commit (no real secrets)
 
 # Logs
 *.log
