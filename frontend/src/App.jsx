@@ -35,7 +35,7 @@ const Spin = () => (
 
 const App = () => (
   <AuthProvider>
-    <Router basename={import.meta.env.BASE_URL}>
+    <Router basename="/">
       <Suspense fallback={<Spin />}>
         <Routes>
           {/* ── Public ── */}
