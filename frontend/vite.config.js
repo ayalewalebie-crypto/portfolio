@@ -5,14 +5,6 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: '/',
   plugins: [react(), tailwindcss()],
-  build: {
-    chunkSizeWarningLimit: 6000,
-    rolldownOptions: {
-      output: {
-        codeSplitting: true,
-      },
-    },
-  },
   server: {
     proxy: {
       '/api': {
