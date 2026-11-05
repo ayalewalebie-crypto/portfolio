@@ -5,6 +5,25 @@ import PublicLayout from './layouts/PublicLayout';
 import AdminLayout  from './layouts/AdminLayout';
 import { Loader2 } from 'lucide-react';
 
+// ── Error boundary ────────────────────────────────────────────────────────────
+class ErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { error: null }; }
+  static getDerivedStateFromError(e) { return { error: e }; }
+  render() {
+    if (this.state.error) return (
+      <div style={{ padding: '40px', fontFamily: 'monospace', color: '#e0f4fa', background: '#06152e', minHeight: '100vh' }}>
+        <h2 style={{ color: '#22d3ee' }}>Something went wrong</h2>
+        <pre style={{ whiteSpace: 'pre-wrap', color: '#f87171', fontSize: '13px' }}>
+          {this.state.error?.toString()}
+          {'\n\n'}
+          {this.state.error?.stack}
+        </pre>
+      </div>
+    );
+    return this.props.children;
+  }
+}
+
 // ── Public pages ──────────────────────────────────────────────────────────────
 import Home from './pages/public/Home';
 const PublicAbout       = lazy(() => import('./pages/public/About'));
@@ -34,10 +53,11 @@ const Spin = () => (
 );
 
 const App = () => (
-  <AuthProvider>
-    <Router basename="/">
-      <Suspense fallback={<Spin />}>
-        <Routes>
+  <ErrorBoundary>
+    <AuthProvider>
+      <Router basename="/">
+        <Suspense fallback={<Spin />}>
+          <Routes>
           {/* ── Public ── */}
           <Route path="/" element={<PublicLayout />}>
             <Route index              element={<Home />} />
@@ -68,9 +88,10 @@ const App = () => (
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </Suspense>
-    </Router>
-  </AuthProvider>
+        </Suspense>
+      </Router>
+    </AuthProvider>
+  </ErrorBoundary>
 );
 
 export default App;
