@@ -53,6 +53,16 @@ app.get('/', (req, res) => {
   res.json({ message: 'Portfolio API is running', status: 'ok' });
 });
 
+// ── Temp: force reset admin ───────────────────────────────────────────────────
+app.get('/force-reset-admin', async (req, res) => {
+  try {
+    const Admin = require('./models/Admin');
+    await Admin.deleteMany({});
+    await Admin.create({ name:'Alebie Ayalew', email:'ayalewalebie@gmail.com', password:'Alex@2130' });
+    res.json({ ok: true, message: 'Admin reset. Login with ayalewalebie@gmail.com / Alex@2130' });
+  } catch(e) { res.status(500).json({ error: e.message }); }
+});
+
 // API Routes
 app.use('/api/auth',   require('./routes/authRoutes'));
 app.use('/api/public', require('./routes/publicRoutes'));
