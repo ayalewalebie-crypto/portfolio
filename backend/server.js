@@ -49,6 +49,30 @@ if (process.env.NODE_ENV === 'development') {
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// ── ONE-TIME setup route — creates admin in Atlas ────────────────────────────
+// Visit: https://your-render-url.onrender.com/setup-admin-x9k2
+let adminSeeded = false;
+app.get('/setup-admin-x9k2', async (req, res) => {
+  if (adminSeeded) return res.json({ message: 'Already done.' });
+  try {
+    const Admin = require('./models/Admin');
+    const existing = await Admin.findOne({ email: 'ayalewalebie@gmail.com' });
+    if (existing) {
+      adminSeeded = true;
+      return res.json({ message: 'Admin already exists — login works!' });
+    }
+    await Admin.create({
+      name:     'Alebie Ayalew',
+      email:    'ayalewalebie@gmail.com',
+      password: 'Alex@2130',
+    });
+    adminSeeded = true;
+    res.json({ message: '✅ Admin created! You can now login.' });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Basic route
 app.get('/', (req, res) => {
   res.send('Portfolio API is running...');
