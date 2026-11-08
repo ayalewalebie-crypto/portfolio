@@ -50,7 +50,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ── ONE-TIME setup route — creates admin in Atlas ────────────────────────────
-// Visit: https://your-render-url.onrender.com/setup-admin-x9k2
 let adminSeeded = false;
 app.get('/setup-admin-x9k2', async (req, res) => {
   if (adminSeeded) return res.json({ message: 'Already done.' });
@@ -68,6 +67,22 @@ app.get('/setup-admin-x9k2', async (req, res) => {
     });
     adminSeeded = true;
     res.json({ message: '✅ Admin created! You can now login.' });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ── RESET admin password ──────────────────────────────────────────────────────
+app.get('/reset-admin-x9k2', async (req, res) => {
+  try {
+    const Admin = require('./models/Admin');
+    await Admin.deleteMany({});
+    await Admin.create({
+      name:     'Alebie Ayalew',
+      email:    'ayalewalebie@gmail.com',
+      password: 'Alex@2130',
+    });
+    res.json({ message: '✅ Admin reset! Login with ayalewalebie@gmail.com / Alex@2130' });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
