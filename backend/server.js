@@ -88,6 +88,19 @@ app.get('/reset-admin-x9k2', async (req, res) => {
   }
 });
 
+// ── DEBUG — check admin exists and test password ──────────────────────────────
+app.get('/debug-admin', async (req, res) => {
+  try {
+    const Admin = require('./models/Admin');
+    const admin = await Admin.findOne({ email: 'ayalewalebie@gmail.com' });
+    if (!admin) return res.json({ exists: false });
+    const match = await admin.matchPassword('Alex@2130');
+    res.json({ exists: true, email: admin.email, passwordMatch: match });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Basic route
 app.get('/', (req, res) => {
   res.send('Portfolio API is running...');
