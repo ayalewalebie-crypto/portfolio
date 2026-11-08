@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { adm } from '../services/api';
+import { adm, getUploadUrl } from '../services/api';
 import {
   LayoutDashboard, FolderKanban, Code2, GraduationCap, Briefcase,
   Award, Network, FileText, Mail, Settings,
@@ -90,9 +90,7 @@ const AdminLayout = () => {
             <div className="w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 shadow-lg">
               {profile?.profilePhoto ? (
                 <img
-                  src={profile.profilePhoto.startsWith('http')
-                    ? profile.profilePhoto
-                    : `http://localhost:5000${profile.profilePhoto}`}
+                  src={getUploadUrl(profile.profilePhoto)}
                   alt={profile.name}
                   className="w-full h-full object-cover"
                 />

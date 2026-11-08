@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { adm, UPLOADS_PROXY } from '../../services/api';
+import { adm, getUploadUrl } from '../../services/api';
 import PageHeader from '../../components/admin/PageHeader';
 import EmptyState from '../../components/admin/EmptyState';
 import {
@@ -18,10 +18,7 @@ const fmtDate = (d) => d
   : '';
 
 const resolveUrl = (src) => {
-  if (!src) return '';
-  if (src.startsWith('http')) return src;
-  if (src.startsWith('/uploads/')) return `${UPLOADS_PROXY}${src.slice('/uploads'.length)}`;
-  return src;
+  return getUploadUrl(src);
 };
 
 const isImage = (mimetype = '', filename = '') => {

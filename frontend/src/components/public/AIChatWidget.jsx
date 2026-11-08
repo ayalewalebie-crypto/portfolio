@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import { pub } from '../../services/api';
 import { X, Send, Bot, User, Loader2, Sparkles, ChevronDown } from 'lucide-react';
 
 const SUGGESTED = [
@@ -93,9 +93,7 @@ const AIChatWidget = ({ externalOpen = false, onExternalOpenConsumed }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post('/api/public/ai-chat', {
-        message: trimmed,
-      });
+      const { data } = await pub.aiChat(trimmed);
       setMessages((prev) => [...prev, { role: 'assistant', text: data.reply }]);
     } catch {
       setMessages((prev) => [

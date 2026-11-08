@@ -1,5 +1,5 @@
-﻿import React, { useEffect, useState } from 'react';
-import { pub, UPLOADS_PROXY } from '../../services/api';
+import React, { useEffect, useState } from 'react';
+import { pub, getUploadUrl } from '../../services/api';
 import { FolderKanban, ExternalLink, Star, X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
 const GithubIcon = ({ size = 15 }) => (
@@ -20,13 +20,9 @@ const safeUrl = (url) => {
   return `https://${u}`;                       // bare domain e.g. myapp.vercel.app
 };
 
-// Resolve screenshot URLs — uploaded files are stored as /uploads/... relative paths;
-// use the Vite proxy so they load correctly from the public frontend.
+// Resolve screenshot URLs — supports full external URLs, backend uploads, or relative assets
 const resolveImg = (src) => {
-  if (!src) return '';
-  if (src.startsWith('http')) return src;
-  if (src.startsWith('/uploads/')) return `${UPLOADS_PROXY}${src.slice('/uploads'.length)}`;
-  return src;
+  return getUploadUrl(src);
 };
 
 // ── Project detail modal ──────────────────────────────────────────────────────

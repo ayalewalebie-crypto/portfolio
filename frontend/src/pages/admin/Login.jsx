@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { auth } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle, Shield } from 'lucide-react';
 
@@ -32,14 +32,14 @@ const Login = () => {
     setError('');
     setLoading(true);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', {
+      const { data } = await auth.login({
         email:    email.trim(),
         password,
       });
       login(data.token);
       navigate('/admin');
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid credentials. Please try again.');
+      setError(err.response?.data?.message || (err.message === 'Network Error' ? 'Cannot reach server. Please check backend URL & Render status.' : 'Invalid credentials. Please try again.'));
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { adm } from '../../services/api';
+import { adm, getUploadUrl } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import { Field, Input, Textarea } from '../../components/admin/FormField';
 import {
@@ -131,11 +131,7 @@ const Settings = () => {
     </div>
   );
 
-  const photoSrc = profile.profilePhoto
-    ? (profile.profilePhoto.startsWith('http')
-        ? profile.profilePhoto
-        : `http://localhost:5000${profile.profilePhoto}`)
-    : null;
+  const photoSrc = profile.profilePhoto ? getUploadUrl(profile.profilePhoto) : null;
 
   return (
     <div className="space-y-6 max-w-3xl">

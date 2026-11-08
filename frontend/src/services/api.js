@@ -1,13 +1,25 @@
 import axios from 'axios';
 
-const BASE = import.meta.env.VITE_API_URL 
-  ? `${import.meta.env.VITE_API_URL}/api` 
-  : 'http://localhost:5000/api';
+// Backend base URL (without trailing slash)
+export const BACKEND_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '');
+
+const BASE = `${BACKEND_URL}/api`;
+
+// ── Image / File URL Resolver ────────────────────────────────────────────────
+// Safely resolves uploaded images/files, external URLs, or relative assets
+export const getUploadUrl = (src) => {
+  if (!src) return '';
+  if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('data:') || src.startsWith('blob:')) {
+    return src;
+  }
+  const cleanPath = src.startsWith('/') ? src : `/${src}`;
+  return `${BACKEND_URL}${cleanPath}`;
+};
 
 // ── Axios instances ───────────────────────────────────────────────────────────
 export const publicApi = axios.create({ baseURL: `${BASE}/public` });
-
-export const adminApi = axios.create({ baseURL: `${BASE}/admin` });
+export const adminApi  = axios.create({ baseURL: `${BASE}/admin` });
+export const authApi   = axios.create({ baseURL: `${BASE}/auth` });
 
 // Attach JWT on every admin request
 adminApi.interceptors.request.use((config) => {
@@ -15,6 +27,11 @@ adminApi.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
+
+// ── Auth helpers ──────────────────────────────────────────────────────────────
+export const auth = {
+  login: (credentials) => authApi.post('/login', credentials),
+};
 
 // ── Public helpers ────────────────────────────────────────────────────────────
 export const pub = {
@@ -34,13 +51,10 @@ export const pub = {
   aiChat:            (msg)  => publicApi.post('/ai-chat', { message: msg }),
 };
 
-export const CV_DOWNLOAD_URL = `${BASE}/public/cv/download`;
-
-// Relative paths — routed through the Vite dev-server proxy (same origin).
-// Use these in <img>, <iframe>, <a download> etc. so the browser never
-// makes a cross-origin request to port 5000.
-export const UPLOADS_PROXY      = '/uploads';
-export const CV_DOWNLOAD_PROXY  = '/api/public/cv/download';
+export const CV_DOWNLOAD_URL   = `${BASE}/public/cv/download`;
+export const CV_DOWNLOAD_PROXY = `${BASE}/public/cv/download`;
+export const UPLOADS_PROXY     = `${BACKEND_URL}/uploads`;
+export const UPLOADS           = `${BACKEND_URL}/uploads`;
 
 // ── Admin helpers ─────────────────────────────────────────────────────────────
 export const adm = {
@@ -110,7 +124,3 @@ export const adm = {
   replyMessage:     (id, text) => adminApi.post(`/messages/${id}/reply`, { replyText: text }),
   deleteMessage:    (id) => adminApi.delete(`/messages/${id}`),
 };
-
-export const UPLOADS = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}/uploads`
-  : 'http://localhost:5000/uploads';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { adm, UPLOADS_PROXY } from '../../services/api';
+import { adm, getUploadUrl } from '../../services/api';
 import PageHeader from '../../components/admin/PageHeader';
 import Modal      from '../../components/admin/Modal';
 import EmptyState from '../../components/admin/EmptyState';
@@ -41,10 +41,7 @@ const ScreenshotEditor = ({ screenshots, onChange }) => {
 
   // Resolve display URL — handle both /uploads/... (stored) and full http://... (legacy)
   const displayUrl = (src) => {
-    if (!src) return '';
-    if (src.startsWith('http')) return src;           // already absolute (legacy / external)
-    if (src.startsWith('/uploads/')) return `${UPLOADS_PROXY}${src.replace('/uploads', '')}`; // e.g. /uploads/abc.jpg → proxied
-    return src;
+    return getUploadUrl(src);
   };
 
   const handleFiles = async (files) => {
@@ -234,10 +231,7 @@ const Projects = () => {
 
   // Resolve thumbnail for list view
   const thumb = (src) => {
-    if (!src) return null;
-    if (src.startsWith('http')) return src;
-    if (src.startsWith('/uploads/')) return `${UPLOADS_PROXY}${src.replace('/uploads', '')}`;
-    return src;
+    return getUploadUrl(src);
   };
 
   return (

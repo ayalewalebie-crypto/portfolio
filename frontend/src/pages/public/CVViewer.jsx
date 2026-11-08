@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { pub, UPLOADS_PROXY, CV_DOWNLOAD_PROXY } from '../../services/api';
+import { pub, getUploadUrl, CV_DOWNLOAD_PROXY } from '../../services/api';
 import { Download, ExternalLink, Printer, Loader2, AlertCircle, FileText, CheckCircle2 } from 'lucide-react';
 
 const CVViewer = () => {
@@ -21,7 +21,7 @@ const CVViewer = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const fileUrl = cv ? `${UPLOADS_PROXY}/${cv.filename}` : null;
+  const fileUrl = cv ? getUploadUrl(cv.path || `/uploads/${cv.filename}`) : null;
   const isPdf = cv?.mimetype === 'application/pdf' || cv?.filename?.toLowerCase().endsWith('.pdf');
   const fmtSize = (b) =>
     b ? (b > 1024 * 1024 ? `${(b / 1024 / 1024).toFixed(1)} MB` : `${(b / 1024).toFixed(0)} KB`) : '';

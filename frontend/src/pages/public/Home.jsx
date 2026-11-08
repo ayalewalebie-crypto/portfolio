@@ -1,6 +1,6 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { pub } from '../../services/api';
+import { pub, getUploadUrl } from '../../services/api';
 import { ArrowRight, Mail } from 'lucide-react';
 
 // ── Brand SVGs ────────────────────────────────────────────────────────────────
@@ -159,9 +159,7 @@ const Home = () => {
     pub.getStats().then(({ data }) => setStats(data)).catch(() => {});
   }, []);
 
-  const photoSrc = profile?.profilePhoto
-    ? (profile.profilePhoto.startsWith('http') ? profile.profilePhoto : `http://localhost:5000${profile.profilePhoto}`)
-    : null;
+  const photoSrc = profile?.profilePhoto ? getUploadUrl(profile.profilePhoto) : null;
 
   return (
     <div className="overflow-x-hidden">

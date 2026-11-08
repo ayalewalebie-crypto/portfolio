@@ -1,5 +1,5 @@
-﻿import React, { useEffect, useState } from 'react';
-import { pub } from '../../services/api';
+import React, { useEffect, useState } from 'react';
+import { pub, getUploadUrl } from '../../services/api';
 import { Calendar } from 'lucide-react';
 import SocialConnect from '../../components/public/SocialConnect';
 
@@ -23,11 +23,7 @@ const About = () => {
     });
   }, []);
 
-  const photoSrc = profile?.profilePhoto
-    ? (profile.profilePhoto.startsWith('http')
-        ? profile.profilePhoto
-        : `http://localhost:5000${profile.profilePhoto}`)
-    : null;
+  const photoSrc = profile?.profilePhoto ? getUploadUrl(profile.profilePhoto) : null;
 
   return (
     <div style={{ minHeight: '100vh' }}>
