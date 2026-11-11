@@ -1,7 +1,8 @@
-const express  = require('express');
-const router   = express.Router();
-const multer   = require('multer');
-const path     = require('path');
+const express    = require('express');
+const router     = express.Router();
+const multer     = require('multer');
+const path       = require('path');
+const cloudinary = require('../config/cloudinary');
 const {
   getDashboardStats,
   getProfile, updateProfile, changePassword, uploadProfilePhoto,
@@ -19,15 +20,10 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 
 // ── File upload config ────────────────────────────────────────────────────────
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
-  filename:    (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}-${file.fieldname}${ext}`);
-  },
-});
+// Use memory storage — file is uploaded to Cloudinary, not local disk
+const memStorage = multer.memoryStorage();
 const upload = multer({
-  storage,
+  storage: memStorage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
   fileFilter: (req, file, cb) => {
     const allowed = ['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.pkt'];
@@ -35,6 +31,16 @@ const upload = multer({
     cb(null, allowed.includes(ext));
   },
 });
+
+// ── Helper: upload buffer to Cloudinary ──────────────────────────────────────
+const uploadToCloudinary = (buffer, folder, resourceType = 'auto') =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder, resource_type: resourceType },
+      (err, result) => err ? reject(err) : resolve(result)
+    );
+    stream.end(buffer);
+  });
 
 // All admin routes require auth
 router.use(protect);

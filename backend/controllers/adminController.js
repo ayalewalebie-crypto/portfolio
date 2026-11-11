@@ -53,7 +53,18 @@ exports.getDashboardStats = async (req, res) => {
 exports.uploadProfilePhoto = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file uploaded.' });
-    const photoPath = `/uploads/${req.file.filename}`;
+
+    // Upload to Cloudinary
+    const cloudinary = require('../config/cloudinary');
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'portfolio/profile', resource_type: 'image' },
+        (err, res) => err ? reject(err) : resolve(res)
+      );
+      stream.end(req.file.buffer);
+    });
+
+    const photoPath = result.secure_url;
     let profile = await Profile.findOne();
     if (profile) {
       profile = await Profile.findOneAndUpdate({}, { profilePhoto: photoPath }, { new: true });
@@ -333,8 +344,15 @@ exports.uploadAchievementImage = async (req, res) => {
 exports.uploadProjectImage = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file uploaded.' });
-    const url = `/uploads/${req.file.filename}`;
-    res.status(201).json({ url });
+    const cloudinary = require('../config/cloudinary');
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'portfolio/projects', resource_type: 'image' },
+        (err, res) => err ? reject(err) : resolve(res)
+      );
+      stream.end(req.file.buffer);
+    });
+    res.status(201).json({ url: result.secure_url });
   } catch (err) { res.status(500).json({ message: err.message }); }
 };
 
@@ -347,16 +365,26 @@ exports.getDocuments = async (req, res) => {
 exports.uploadDocument = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file uploaded.' });
+
+    // Upload to Cloudinary
+    const cloudinary = require('../config/cloudinary');
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'portfolio/documents', resource_type: 'auto' },
+        (err, res) => err ? reject(err) : resolve(res)
+      );
+      stream.end(req.file.buffer);
+    });
+
     const doc = await Document.create({
-      name:      req.body.name || req.file.originalname,
-      filename:  req.file.filename,
-      path:      `/uploads/${req.file.filename}`,
-      mimetype:  req.file.mimetype,
-      size:      req.file.size,
-      type:      req.body.type || 'CV',
+      name:        req.body.name || req.file.originalname,
+      filename:    result.public_id,
+      path:        result.secure_url,
+      mimetype:    req.file.mimetype,
+      size:        req.file.size,
+      type:        req.body.type || 'CV',
       isPublished: true,
     });
-    // Update profile cvDocument if it's a CV
     if (doc.type === 'CV') {
       await Profile.findOneAndUpdate({}, { cvDocument: doc._id });
     }
@@ -368,9 +396,13 @@ exports.deleteDocument = async (req, res) => {
   try {
     const doc = await Document.findByIdAndDelete(req.params.id);
     if (!doc) return res.status(404).json({ message: 'Not found' });
-    // Remove file from disk
-    const filePath = path.join(__dirname, '..', 'uploads', doc.filename);
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    // Remove file from Cloudinary
+    if (doc.filename) {
+      try {
+        const cloudinary = require('../config/cloudinary');
+        await cloudinary.uploader.destroy(doc.filename, { resource_type: 'raw' });
+      } catch (_) { /* ignore cloudinary delete errors */ }
+    }
     res.json({ message: 'Deleted' });
   } catch (err) { res.status(500).json({ message: err.message }); }
 };
