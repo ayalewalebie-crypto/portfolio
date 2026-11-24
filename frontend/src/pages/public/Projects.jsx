@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { pub, getUploadUrl } from '../../services/api';
 import { FolderKanban, ExternalLink, Star, X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import useReveal from '../../hooks/useReveal';
 
 const GithubIcon = ({ size = 15 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -261,6 +262,8 @@ const Projects = () => {
   const [filter,   setFilter]   = useState('All');
   const [selected, setSelected] = useState(null);   // project detail modal
 
+  const revealRef = useReveal();
+
   useEffect(() => {
     pub.getProjects().then(({ data }) => setProjects(data)).finally(() => setLoading(false));
   }, []);
@@ -269,7 +272,7 @@ const Projects = () => {
   const filtered   = filter === 'All' ? projects : projects.filter(p => (p.category || 'Project') === filter);
 
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div ref={revealRef} style={{ minHeight: '100vh' }}>
 
       {/* Banner */}
       <div className="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--c-section)' }}>
@@ -282,7 +285,7 @@ const Projects = () => {
             style={{ color: 'var(--c-accent-70)', fontSize: '12px', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase' }}>
             <FolderKanban size={13} /> Projects
           </div>
-          <h1 className="font-extrabold tracking-tight mb-2"
+          <h1 className="font-extrabold tracking-tight mb-2 reveal"
             style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
             My Recent <strong style={{ color: 'var(--c-accent)' }}>Works</strong>
           </h1>
@@ -320,14 +323,14 @@ const Projects = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map(proj => {
+            {filtered.map((proj, idx) => {
               const cat = proj.category || 'Project';
               return (
                 /* Clickable card — opens detail modal */
                 <button
                   key={proj._id}
                   onClick={() => setSelected(proj)}
-                  className="card-glow rounded-2xl overflow-hidden flex flex-col text-left transition-all hover:-translate-y-1 cursor-pointer w-full"
+                  className={`card-glow rounded-2xl overflow-hidden flex flex-col text-left transition-all hover:-translate-y-1 cursor-pointer w-full reveal-scale delay-${((idx % 3) + 1) * 100}`}
                   style={{ background: 'var(--c-surface)' }}
                 >
                   {/* Screenshot or placeholder */}

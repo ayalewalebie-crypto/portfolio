@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { pub, getUploadUrl } from '../../services/api';
 import { ArrowRight, Mail, Code2, FolderKanban, Network, FileText, Phone, Send, Loader2, CheckCircle2, AlertCircle, Play, ChevronDown, ChevronUp, Download, ExternalLink } from 'lucide-react';
 import SkillIcon, { getSkillIcon } from '../../components/public/SkillIcon';
+import useReveal from '../../hooks/useReveal';
 import SocialConnect from '../../components/public/SocialConnect';
 
 // ── Brand SVGs ────────────────────────────────────────────────────────────────
@@ -72,10 +73,10 @@ const TYPEWRITER_STRINGS = [
 
 
 // ── Stats strip ───────────────────────────────────────────────────────────────
-const StatCard = ({ value, label, suffix = '+' }) => {
+const StatCard = ({ value, label, suffix = '+', index = 0 }) => {
   const count = useCountUp(value, 1000);
   return (
-    <div className="flex flex-col items-center gap-2 fade-up">
+    <div className={`flex flex-col items-center gap-2 reveal-scale delay-${((index % 4) + 1) * 100}`}>
       {/* Number box */}
       <div
         style={{
@@ -144,7 +145,7 @@ const StatsStrip = ({ stats }) => {
         }}
       >
         {items.map((item, i) => (
-          <StatCard key={i} {...item} />
+          <StatCard key={i} {...item} index={i} />
         ))}
       </div>
     </div>
@@ -161,9 +162,12 @@ const Home = () => {
   const [cv,       setCv]       = useState(null);
   const [openLab,  setOpenLab]  = useState(null);
   const { display, phase } = useTypewriter(TYPEWRITER_STRINGS);
+  const revealRef = useReveal();
   const [form,   setForm]   = useState({ name:'', email:'', subject:'', message:'' });
   const [status, setStatus] = useState(null);
   const [errMsg, setErrMsg] = useState('');
+
+  
 
   useEffect(() => {
     pub.getProfile().then(({ data }) => setProfile(data)).catch(() => {});
@@ -201,7 +205,7 @@ const Home = () => {
 
   const SectionHeading = ({ icon: Icon, title, accent, to }) => (
     <div className="flex items-center justify-between mb-10">
-      <h2 className="font-extrabold tracking-tight flex items-center gap-3"
+      <h2 className="reveal font-extrabold tracking-tight flex items-center gap-3"
         style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
         <span style={{ width:'44px', height:'44px', borderRadius:'12px', background:`${accent}22`, border:`1px solid ${accent}44`, display:'inline-flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
           <Icon size={20} style={{ color: accent }} />
@@ -216,7 +220,7 @@ const Home = () => {
   );
 
   return (
-    <div className="overflow-x-hidden">
+    <div ref={revealRef} className="overflow-x-hidden">
 
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
@@ -291,7 +295,7 @@ const Home = () => {
       {/* INTRODUCE MYSELF */}
       <section style={{ background:'var(--c-section)', padding:'70px 16px' }}>
         <div className="max-w-6xl mx-auto">
-          <h2 className="font-extrabold mb-8 text-center" style={{ fontSize:'clamp(1.4rem,3vw,2rem)', color:'var(--c-text)', fontFamily:'var(--font-sans)' }}>
+          <h2 className="reveal font-extrabold mb-8 text-center" style={{ fontSize:'clamp(1.4rem,3vw,2rem)', color:'var(--c-text)', fontFamily:'var(--font-sans)' }}>
             LET ME <span style={{ color:'var(--c-accent)' }}>INTRODUCE</span> MYSELF
           </h2>
           <div className="flex-1">
@@ -350,7 +354,7 @@ const Home = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {projects.slice(0,6).map(proj => (
-                <Link key={proj._id} to="/projects" className="card-glow rounded-2xl overflow-hidden flex flex-col transition-all hover:-translate-y-1" style={{ textDecoration:'none', background:'var(--c-surface)' }}>
+                <Link key={proj._id} to="/projects" className="reveal-scale card-glow rounded-2xl overflow-hidden flex flex-col transition-all hover:-translate-y-1" style={{ textDecoration:'none', background:'var(--c-surface)' }}>
                   {proj.screenshots?.length > 0 ? (
                     <img src={getUploadUrl(proj.screenshots[0])} alt={proj.title} className="w-full h-40 object-cover"/>
                   ) : (
@@ -418,7 +422,7 @@ const Home = () => {
       <section id="cv" style={{ padding:'80px 16px', background:'var(--c-section)' }}>
         <div className="max-w-6xl mx-auto">
           <SectionHeading icon={FileText} title="CV / Resume" accent="#f472b6" to="/cv"/>
-          <div className="flex flex-col sm:flex-row items-center gap-8 card-glow rounded-3xl p-8">
+          <div className="reveal-scale flex flex-col sm:flex-row items-center gap-8 card-glow rounded-3xl p-8">
             <div className="flex-1">
               <h3 className="font-bold text-xl mb-2" style={{ color:'var(--c-text)', fontFamily:'var(--font-sans)' }}>{cv ? cv.name : 'My Curriculum Vitae'}</h3>
               <p className="text-sm mb-6" style={{ color:'var(--c-text-60)' }}>View my full qualifications, education, experience and certifications.</p>
@@ -457,7 +461,7 @@ const Home = () => {
               </div>
               <SocialConnect compact/>
             </div>
-            <div className="rounded-3xl p-7" style={{ background:'var(--c-surface)', border:'1px solid var(--c-border)', boxShadow:'0 8px 40px rgba(0,0,0,.2)' }}>
+            <div className="reveal-right delay-200 rounded-3xl p-7" style={{ background:'var(--c-surface)', border:'1px solid var(--c-border)', boxShadow:'0 8px 40px rgba(0,0,0,.2)' }}>
               {status==='success' ? (
                 <div className="flex flex-col items-center py-8 text-center gap-4">
                   <CheckCircle2 size={40} style={{ color:'#10b981' }}/>

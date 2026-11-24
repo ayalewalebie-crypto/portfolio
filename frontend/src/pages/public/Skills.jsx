@@ -2,6 +2,7 @@
 import { pub } from '../../services/api';
 import { X } from 'lucide-react';
 import SkillIcon, { getSkillIcon } from '../../components/public/SkillIcon';
+import useReveal from '../../hooks/useReveal';
 
 const CAT_ICON = {
   Frontend:'⚛️', Backend:'🖥️', Database:'🗄️', Languages:'💻',
@@ -79,7 +80,7 @@ const SkillPill = ({ skill, onClick }) => {
   return (
     <button
       onClick={() => typeof skill !== 'string' && skill.description !== undefined && onClick(skill)}
-      className="inline-flex items-center gap-2.5 transition-all hover:scale-105"
+      className="reveal-scale inline-flex items-center gap-2.5 transition-all hover:scale-105"
       style={{
         padding: '10px 20px',
         borderRadius: '999px',
@@ -130,6 +131,8 @@ const Skills = () => {
   const [loading,  setLoading]  = useState(true);
   const [selected, setSelected] = useState(null);
 
+  const revealRef = useReveal();
+
   useEffect(() => {
     pub.getSkills()
       .then(({ data }) => setSkills(Array.isArray(data) ? data : []))
@@ -147,7 +150,7 @@ const Skills = () => {
   const isFallback = skills.length === 0;
 
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div ref={revealRef} style={{ minHeight: '100vh' }}>
       {/* Banner */}
       <div className="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
         style={{ background: 'var(--c-section)' }}>
@@ -156,7 +159,7 @@ const Skills = () => {
             style={{ background: 'radial-gradient(circle,var(--c-accent-bg-md) 0%,transparent 70%)', filter: 'blur(40px)', opacity: .3 }} />
         </div>
         <div className="relative max-w-6xl mx-auto text-center">
-          <h1 className="font-extrabold tracking-tight mb-2"
+          <h1 className="font-extrabold tracking-tight mb-2 reveal"
             style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
             Professional <strong style={{ color: 'var(--c-accent)' }}>Skillset</strong>
           </h1>
@@ -184,7 +187,7 @@ const Skills = () => {
         ) : (
           <div className="space-y-12">
             {Object.entries(display).map(([cat, catSkills]) => (
-              <div key={cat} className="text-center">
+              <div key={cat} className="text-center reveal delay-100">
                 <h3 className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest mb-7"
                   style={{ color: 'var(--c-accent-70)' }}>
                   <span className="h-px w-8 hidden sm:block" style={{ background: 'var(--c-accent-bg-md)' }} />
@@ -193,12 +196,13 @@ const Skills = () => {
                   <span className="h-px w-8 hidden sm:block" style={{ background: 'var(--c-accent-bg-md)' }} />
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {catSkills.map(sk => (
-                    <SkillPill
-                      key={typeof sk === 'string' ? sk : sk._id}
-                      skill={sk}
-                      onClick={setSelected}
-                    />
+                  {catSkills.map((sk, idx) => (
+                    <div key={typeof sk === 'string' ? sk : sk._id} className={`reveal-scale delay-${((idx % 6) + 1) * 100}`}>
+                      <SkillPill
+                        skill={sk}
+                        onClick={setSelected}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>

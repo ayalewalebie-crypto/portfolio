@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { pub, getUploadUrl } from '../../services/api';
 import { Calendar } from 'lucide-react';
 import SocialConnect from '../../components/public/SocialConnect';
+import useReveal from '../../hooks/useReveal';
 
 const fmtYear = (d) => d ? new Date(d).getFullYear() : '';
 const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '';
@@ -10,6 +11,8 @@ const About = () => {
   const [profile,   setProfile]   = useState(null);
   const [education, setEducation] = useState([]);
   const [experience,setExperience]= useState([]);
+
+  const revealRef = useReveal();
 
   useEffect(() => {
     Promise.allSettled([
@@ -26,7 +29,7 @@ const About = () => {
   const photoSrc = profile?.profilePhoto ? getUploadUrl(profile.profilePhoto) : null;
 
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div ref={revealRef} style={{ minHeight: '100vh' }}>
 
       {/* Banner */}
       <div className="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
@@ -38,11 +41,11 @@ const About = () => {
         <div className="relative max-w-6xl mx-auto">
           <p className="text-xs font-bold uppercase tracking-widest mb-3"
             style={{ color: 'var(--c-accent-70)' }}>— About Me</p>
-          <h1 className="font-extrabold tracking-tight mb-2"
+          <h1 className="font-extrabold tracking-tight mb-2 reveal"
             style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}>
             Know Who <strong style={{ color: 'var(--c-accent)' }}>I'M</strong>
           </h1>
-          <p style={{ color: 'var(--c-text-60)', fontSize: '14px' }}>
+          <p className="reveal" style={{ color: 'var(--c-text-60)', fontSize: '14px' }}>
             Background, education, and work experience.
           </p>
         </div>
@@ -53,13 +56,13 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
           {/* Photo + quick info */}
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-6 reveal-left delay-100">
             {photoSrc ? (
               <div className="relative">
                 <div className="absolute inset-0 rounded-full blur-2xl opacity-40"
                   style={{ background: 'linear-gradient(135deg,var(--c-accent),#0891b2)', transform: 'scale(1.15)' }} />
                 <img src={photoSrc} alt={profile?.name || 'Profile'}
-                  className="relative w-48 h-48 sm:w-56 sm:h-56 object-cover avatar-glow" />
+                  className="relative w-48 h-48 sm:w-56 sm:h-56 object-cover avatar-glow float-slow" />
               </div>
             ) : (
               <div className="w-48 h-48 rounded-full flex items-center justify-center"
@@ -104,7 +107,7 @@ const About = () => {
           </div>
 
           {/* Bio + Education + Experience */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8 reveal-right delay-200">
 
             {/* Bio */}
             <div>

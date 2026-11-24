@@ -1,17 +1,20 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { pub } from '../../services/api';
 import { Network, Star, ChevronDown, ChevronUp, Terminal } from 'lucide-react';
+import useReveal from '../../hooks/useReveal';
 
 const NetworkingLabs = () => {
   const [labs,    setLabs]    = useState([]);
   const [loading, setLoading] = useState(true);
   const [open,    setOpen]    = useState(null);
 
+  const revealRef = useReveal();
+
   useEffect(() => { pub.getLabs().then(({data}) => setLabs(data)).finally(() => setLoading(false)); }, []);
   const toggle = (id) => setOpen(p => p === id ? null : id);
 
   return (
-    <div style={{ minHeight:'100vh' }}>
+    <div ref={revealRef} style={{ minHeight:'100vh' }}>
       {/* Banner */}
       <div className="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8" style={{background:'var(--c-section)'}}>
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -22,7 +25,7 @@ const NetworkingLabs = () => {
           <div className="flex items-center gap-2 mb-3" style={{color:'rgba(45,212,191,.7)', fontSize:'12px', fontWeight:700, letterSpacing:'.1em', textTransform:'uppercase'}}>
             <Network size={13}/> Networking
           </div>
-          <h1 className="font-extrabold tracking-tight mb-2" style={{fontSize:'clamp(2rem,5vw,3.2rem)', color:'var(--c-text)', fontFamily:'var(--font-sans)'}}>
+          <h1 className="font-extrabold tracking-tight mb-2 reveal" style={{fontSize:'clamp(2rem,5vw,3.2rem)', color:'var(--c-text)', fontFamily:'var(--font-sans)'}}>
             Networking <strong style={{color:'var(--c-teal)'}}>Labs</strong>
           </h1>
           <p style={{color:'var(--c-text-60)', fontSize:'14px'}}>
@@ -41,8 +44,8 @@ const NetworkingLabs = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            {labs.map(lab => (
-              <div key={lab._id} className="card-glow rounded-2xl overflow-hidden transition-all"
+            {labs.map((lab, idx) => (
+              <div key={lab._id} className={`card-glow rounded-2xl overflow-hidden transition-all reveal delay-${((idx % 6) + 1) * 100}`}
                 style={open === lab._id ? {borderColor:'rgba(45,212,191,.4)'} : {}}>
                 <button onClick={() => toggle(lab._id)}
                   className="w-full flex items-center justify-between px-6 py-5 text-left">

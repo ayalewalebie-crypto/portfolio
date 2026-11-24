@@ -311,4 +311,65 @@
     0%  { background-position: 0 0,24px 40px; }
     100%{ background-position: 48px 48px,72px 88px; }
   }
+
+  /* ── Scroll-reveal (intersection observer driven) ── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale { opacity: 0; transform: scale(.85); transition: opacity .6s ease, transform .6s ease; }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+  /* ── Stagger delays ── */
+  .delay-100 { transition-delay: .1s !important; }
+  .delay-200 { transition-delay: .2s !important; }
+  .delay-300 { transition-delay: .3s !important; }
+  .delay-400 { transition-delay: .4s !important; }
+  .delay-500 { transition-delay: .5s !important; }
+  .delay-600 { transition-delay: .6s !important; }
+
+  /* ── Floating animation ── */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-12px); }
+  }
+  .float { animation: float 4s ease-in-out infinite; }
+  .float-slow { animation: float 6s ease-in-out infinite; }
+  .float-fast { animation: float 2.5s ease-in-out infinite; }
+
+  /* ── Pulse glow ── */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px var(--cyan-glow); }
+    50%       { box-shadow: 0 0 40px var(--cyan-glow), 0 0 80px var(--cyan-glow); }
+  }
+  .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+  /* ── Gradient shift ── */
+  @keyframes gradient-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .gradient-animate {
+    background-size: 200% 200%;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  /* ── Spin slow ── */
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  .spin-slow { animation: spin-slow 8s linear infinite; }
+
+  /* ── Bounce dot ── */
+  @keyframes bounce-dot {
+    0%, 80%, 100% { transform: scale(0); }
+    40%           { transform: scale(1); }
+  }
+
+  /* ── Number count-up highlight ── */
+  @keyframes count-up-flash {
+    0%   { color: var(--c-accent); transform: scale(1.2); }
+    100% { color: #fff; transform: scale(1); }
+  }
 }

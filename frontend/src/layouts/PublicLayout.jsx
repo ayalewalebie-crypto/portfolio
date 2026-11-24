@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, ChevronUp } from 'lucide-react';
 import {
   FiHome, FiUser, FiCode, FiMonitor,
   FiWifi, FiFileText, FiMail,
@@ -307,12 +307,43 @@ const PublicLayout = () => {
       )}
 
       {/* Page content */}
-      <main className="flex-1 pt-[68px]">
+      <main className="flex-1 pt-[68px]" style={{ animation: 'fadeUp .5s ease forwards' }}>
         <Outlet />
       </main>
 
       {/* Footer */}
       <FooterWithSocials light={light} />
+
+      {/* ── Scroll to top button ── */}
+      {scrolled && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Scroll to top"
+          className="fade-up"
+          style={{
+            position: 'fixed',
+            bottom: '28px',
+            right: '24px',
+            zIndex: 40,
+            width: '44px',
+            height: '44px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'linear-gradient(135deg,#0891b2,#22d3ee)',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 4px 20px rgba(34,211,238,.5)',
+            transition: 'transform .25s ease, box-shadow .25s ease',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(34,211,238,.65)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(34,211,238,.5)'; }}
+        >
+          <ChevronUp size={20} strokeWidth={2.5} />
+        </button>
+      )}
     </div>
   );
 };
