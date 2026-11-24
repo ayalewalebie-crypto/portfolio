@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { pub, getUploadUrl } from '../../services/api';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail, Code2, FolderKanban, Wifi, FileText, Phone, Network } from 'lucide-react';
 
 // ── Brand SVGs ────────────────────────────────────────────────────────────────
 const GithubIcon = ({ size = 18 }) => (
@@ -148,6 +148,159 @@ const StatsStrip = ({ stats }) => {
     </div>
   );
 };
+
+// ── Page Previews Section ─────────────────────────────────────────────────────
+const PAGES = [
+  {
+    to:    '/skills',
+    icon:  Code2,
+    title: 'Skills',
+    desc:  'Technologies & tools I work with every day.',
+    color: '#22d3ee',
+    glow:  'rgba(34,211,238,.18)',
+  },
+  {
+    to:    '/projects',
+    icon:  FolderKanban,
+    title: 'Projects',
+    desc:  'Full-stack apps, IoT systems, and more.',
+    color: '#06b6d4',
+    glow:  'rgba(6,182,212,.18)',
+  },
+  {
+    to:    '/networking-labs',
+    icon:  Network,
+    title: 'Networking Labs',
+    desc:  'Cisco simulations, VLANs & routing configs.',
+    color: '#2dd4bf',
+    glow:  'rgba(45,212,191,.18)',
+  },
+  {
+    to:    '/cv',
+    icon:  FileText,
+    title: 'CV / Resume',
+    desc:  'View and download my full curriculum vitae.',
+    color: '#f472b6',
+    glow:  'rgba(244,114,182,.18)',
+  },
+  {
+    to:    '/contact',
+    icon:  Phone,
+    title: 'Contact',
+    desc:  'Get in touch — I respond within 24 hours.',
+    color: '#4ade80',
+    glow:  'rgba(74,222,128,.18)',
+  },
+];
+
+const PagePreviews = () => (
+  <section style={{ background: 'var(--c-section)', padding: '70px 0' }}>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Heading */}
+      <h2
+        className="font-extrabold text-center mb-10"
+        style={{ fontSize: 'clamp(1.4rem,3vw,2rem)', color: 'var(--c-text)', fontFamily: 'var(--font-sans)' }}
+      >
+        EXPLORE MY <span style={{ color: 'var(--c-accent)' }}>PORTFOLIO</span>
+      </h2>
+
+      {/* Scrollable row */}
+      <div
+        style={{
+          display: 'flex',
+          gap: '20px',
+          overflowX: 'auto',
+          paddingBottom: '16px',
+          scrollSnapType: 'x mandatory',
+          WebkitOverflowScrolling: 'touch',
+          /* hide scrollbar visually but keep it functional */
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+        }}
+      >
+        {PAGES.map(({ to, icon: Icon, title, desc, color, glow }) => (
+          <Link
+            key={to}
+            to={to}
+            style={{
+              flex: '0 0 220px',
+              scrollSnapAlign: 'start',
+              borderRadius: '20px',
+              padding: '28px 22px',
+              background: 'var(--c-surface)',
+              border: `1px solid ${glow}`,
+              boxShadow: `0 4px 24px ${glow}`,
+              textDecoration: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '14px',
+              transition: 'transform .25s ease, box-shadow .25s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'translateY(-6px)';
+              e.currentTarget.style.boxShadow = `0 12px 36px ${glow}`;
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = `0 4px 24px ${glow}`;
+            }}
+          >
+            {/* Icon circle */}
+            <div style={{
+              width: '52px', height: '52px',
+              borderRadius: '14px',
+              background: glow,
+              border: `1px solid ${color}40`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
+            }}>
+              <Icon size={24} style={{ color }} />
+            </div>
+
+            {/* Text */}
+            <div>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontWeight: 800,
+                fontSize: '16px',
+                color: 'var(--c-text)',
+                marginBottom: '6px',
+              }}>
+                {title}
+              </p>
+              <p style={{
+                fontSize: '13px',
+                color: 'var(--c-text-60)',
+                lineHeight: 1.55,
+              }}>
+                {desc}
+              </p>
+            </div>
+
+            {/* Arrow */}
+            <div style={{
+              marginTop: 'auto',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '12px',
+              fontWeight: 700,
+              color,
+              fontFamily: 'var(--font-sans)',
+            }}>
+              Explore <ArrowRight size={13} />
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Scroll hint on mobile */}
+      <p className="text-center mt-4 text-xs sm:hidden" style={{ color: 'var(--c-text-40)' }}>
+        ← Swipe to see more →
+      </p>
+    </div>
+  </section>
+);
 
 const Home = () => {
   const [profile, setProfile] = useState(null);
@@ -332,6 +485,11 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          PAGE PREVIEWS — scrollable cards for each section
+      ══════════════════════════════════════════════════════════════ */}
+      <PagePreviews />
 
     </div>
   );

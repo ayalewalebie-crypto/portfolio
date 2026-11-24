@@ -156,9 +156,7 @@ const PublicLayout = () => {
     to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
 
   const logoPrefix = (() => {
-    if (!profile?.name) return 'Al';
-    const parts = profile.name.trim().split(/\s+/);
-    return parts[0].slice(0, 2);
+    return 'ALeX';
   })();
 
   const githubUrl = profile?.github?.trim()
