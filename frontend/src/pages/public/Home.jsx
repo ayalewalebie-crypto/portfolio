@@ -204,27 +204,15 @@ const PagePreviews = () => (
         EXPLORE MY <span style={{ color: 'var(--c-accent)' }}>PORTFOLIO</span>
       </h2>
 
-      {/* Scrollable row */}
+      {/* Vertical grid — 2 cols on mobile, 3 on tablet, 5 on desktop */}
       <div
-        style={{
-          display: 'flex',
-          gap: '20px',
-          overflowX: 'auto',
-          paddingBottom: '16px',
-          scrollSnapType: 'x mandatory',
-          WebkitOverflowScrolling: 'touch',
-          /* hide scrollbar visually but keep it functional */
-          msOverflowStyle: 'none',
-          scrollbarWidth: 'none',
-        }}
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"
       >
         {PAGES.map(({ to, icon: Icon, title, desc, color, glow }) => (
           <Link
             key={to}
             to={to}
             style={{
-              flex: '0 0 220px',
-              scrollSnapAlign: 'start',
               borderRadius: '20px',
               padding: '28px 22px',
               background: 'var(--c-surface)',
@@ -277,27 +265,16 @@ const PagePreviews = () => (
               </p>
             </div>
 
-            {/* Arrow */}
+            {/* Arrow icon only */}
             <div style={{
               marginTop: 'auto',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '12px',
-              fontWeight: 700,
               color,
-              fontFamily: 'var(--font-sans)',
             }}>
-              Explore <ArrowRight size={13} />
+              <ArrowRight size={16} />
             </div>
           </Link>
         ))}
       </div>
-
-      {/* Scroll hint on mobile */}
-      <p className="text-center mt-4 text-xs sm:hidden" style={{ color: 'var(--c-text-40)' }}>
-        ← Swipe to see more →
-      </p>
     </div>
   </section>
 );
